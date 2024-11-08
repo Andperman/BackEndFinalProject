@@ -1,12 +1,12 @@
 const queries = {
     getUsersByEmail: `
-    SELECT name,email,password,img
+    SELECT username,email,password,img,role
     FROM users
     WHERE email=$1;`,
-    getAllUsers: `SELECT a.name,a.email,a.image,a.email 
+    getAllUsers: `SELECT u.username,u.email,u.password,u.img,u.role
     FROM users AS u
-    ORDER BY u.name;`,
-    createUser: `INSERT INTO users(name,email,password,img) 
+    ORDER BY u.username;`,
+    createUser: `INSERT INTO users(username,email,password,img) 
     VALUES ($1,$2,$3,$4)
     `,
     updateUserByEmail: `UPDATE users
