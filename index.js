@@ -20,10 +20,10 @@ app.set('view engine', 'pug');
 app.set('views','./views');
 
 const userRoutes = require("./routes/user.routes");
-const adminRoutes = require("./routes/admin.routes")
+// const adminRoutes = require("./routes/admin.routes")
 
 app.use('/', userRoutes);
-app.use('/', adminRoutes);
+// app.use('/', adminRoutes);
 
 app.use('*', function(req, res){
     res.status(404).render('error404.pug')})
