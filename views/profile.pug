@@ -28,13 +28,15 @@ html(lang="en")
       section.profileSection
         article.profileArticle
           div
-            h1 #{username}
+            h2 #{username}
             #divImg
                 img(src="../assets/img_prueba.jpg" alt="")
           div
             ul
               li #{email}
               li #{password}
-            button#viewOffer EDIT PROFILE
+            div 
+              button#editUser <i class="fa-solid fa-pen"></i>
+              button#eraseUser <i class="fa-solid fa-trash"></i>
     
     script(src="/public/js/script.js")

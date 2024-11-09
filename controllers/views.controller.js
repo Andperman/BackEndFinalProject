@@ -75,7 +75,7 @@ const getFavorites = (req, res) => {
 const getUsersView = (req, res) => {
     try {
         let isLogged = true;
-        let role = 'user';
+        let role = 'admin';
         let username = 'Bolito';
         let email = 'bolito@gmail.com';
         let password = '******';
@@ -104,7 +104,7 @@ const getUsersView = (req, res) => {
 const getDashboard = (req, res) => {
     try {
         let isLogged = true;
-        let role = 'user';
+        let role = 'admin';
         // -- FALTA CONSULTAR SQL PARA VER SI ES ADMIN O NO
         // -- FALTA RECIBIR DATOS DE USERNAME, EMAIL, PASSWORD DE SQL
         if (isLogged === true && role === 'admin') {
@@ -127,5 +127,6 @@ module.exports = {
     getHome,
     getProfile,
     getFavorites,
-    getUsersView
+    getUsersView,
+    getDashboard
 }

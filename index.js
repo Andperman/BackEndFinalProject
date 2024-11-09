@@ -28,7 +28,8 @@ const viewsRoutes = require("./routes/views.routes");
 app.use('/', viewsRoutes);
 
 app.use('*', function(req, res){
-    res.status(404).render('error404.pug')})
+    res.status(404).render('error', { statusCode: 400 })
+});
 
 app.listen(port, () => {
     console.log(`Listening on http://localhost:${port}`)
