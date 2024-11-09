@@ -5,6 +5,11 @@ html(lang="en")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     link(rel="stylesheet" href="/css/style.css")
     script(src="https://kit.fontawesome.com/415eb65d7d.js" crossorigin="anonymous")
+    //- Google Fonts
+    link(rel="preconnect", href="https://fonts.googleapis.com")
+    link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
+    link(href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins:wght@400;500;600;700;800&display=swap", rel="stylesheet")
+
     title Home
   body
     header
@@ -26,7 +31,23 @@ html(lang="en")
                 button#logIn LOGIN
                 button#signUp SIGN UP
     main
-        h1 Your Job Offers
+        div
+            h1 Your Job Offers
+            button#addOffer.squareBtn <i class="fa-solid fa-plus"></i>
+            div#popupAddOffer.popup
+                div.popup-content
+                    span.close#closePopupAddOffer <i class="fa-solid fa-xmark"></i>
+                    h2 Create a job offer
+                    form#formNewOffer(action="/api/ads" method="POST")
+                        div
+                            label(for="title") Title:
+                            input(type="text" name="title" placeholder="Title" required)
+                        div
+                            label(for="description") Description:
+                            input(type="text" name="description" placeholder="Description" required)
+                        //- PONER AQUÍ LOS DOCUMENTOS DE MONGODB
+                        input.button(type="submit" value="CREATE JOB OFFER")
+                        .warningDiv
         section
             article.homeArticle
                 h2 Oferta de trabajo
@@ -63,4 +84,4 @@ html(lang="en")
                 li URL
                 li Date
                 if scrapping
-    script(src="/public/js/script.js")
+    script(src="/js/script.js")

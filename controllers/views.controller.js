@@ -1,7 +1,7 @@
 // HOME
 const getHome = (req, res) => {
     try {
-        let isLogged = true;
+        let isLogged = false;
         let role = 'user';
         scrapping = true;
         // -- FALTA CONSULTAR SQL PARA VER SI ES ADMIN O NO
@@ -11,7 +11,7 @@ const getHome = (req, res) => {
             scrapping: scrapping
         });
     }
-    catch (error) { 
+    catch (error) {
         console.log(`ERROR: ${error.stack}`);
         res.status(400).render('error', { statusCode: 400 });
     }
@@ -35,10 +35,10 @@ const getProfile = (req, res) => {
                 email: email,
                 password: password
             });
-        }else { // Error de no autorizado
+        } else { // Error de no autorizado
             res.status(401).render('error', { statusCode: 401 });
         }
-        
+
     }
     catch (error) {
         console.log(`ERROR: ${error.stack}`);
@@ -60,10 +60,10 @@ const getFavorites = (req, res) => {
                 role: role,
                 scrapping: scrapping
             });
-        }else { // Error de no autorizado
+        } else { // Error de no autorizado
             res.status(401).render('error', { statusCode: 401 });
         }
-        
+
     }
     catch (error) {
         console.log(`ERROR: ${error.stack}`);
@@ -89,10 +89,10 @@ const getUsersView = (req, res) => {
                 email: email,
                 password: password
             });
-        }else { // Error de no autorizado
+        } else { // Error de no autorizado
             res.status(401).render('error', { statusCode: 401 });
         }
-        
+
     }
     catch (error) {
         console.log(`ERROR: ${error.stack}`);
@@ -112,10 +112,53 @@ const getDashboard = (req, res) => {
                 isLogged: isLogged,
                 role: role
             });
-        }else { // Error de no autorizado
+        } else { // Error de no autorizado
             res.status(401).render('error', { statusCode: 401 });
         }
+
+    }
+    catch (error) {
+        console.log(`ERROR: ${error.stack}`);
+        res.status(400).render('error', { statusCode: 400 });
+    }
+}
+
+const searchJobOffers = async (req, res) => {
+    try {
+
+        // Recibimos el texto por body (viene del formulario)
+        let search = req.body.search;
+        // -- AQUÍ FALTA LA LLAMADA AL SCRAPPING CON ELTEXTO BUSCADO
+        // Poner aquí el fetch y el await
         
+        // Ejemplo de lo que recibiríamos (borrar):
+        let example = [
+            {
+                title: "Se busca a Bolito",
+                description: "Bolito es el mejor freelancer. Te necesitamos Bolito :(",
+                date: "12/10/24",
+                url: "www.ejemplo.com"
+            },
+            {
+                title: "Necesitamos freelancer con experiencia",
+                description: "Blablabla ejemplo balsdnashdjafhans nlasdkjsakd",
+                date: "15/10/24",
+                url: "www.ejemplo.com"
+            }
+        ]
+        // Pintar resultados
+        let section = document.querySelector("section");
+        section.innerHTML = "";
+        example.forEach(result => {
+            section.innerHTML += `
+                <article>
+                    <h2>${result.title}</h2>
+                    <p>${result.description}</p>
+                    <p>${result.date}</p>
+                    <a src=${result.url}></a>
+                </article>
+            `
+        })
     }
     catch (error) {
         console.log(`ERROR: ${error.stack}`);
@@ -128,5 +171,6 @@ module.exports = {
     getProfile,
     getFavorites,
     getUsersView,
-    getDashboard
+    getDashboard,
+    searchJobOffers
 }

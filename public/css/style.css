@@ -12,51 +12,99 @@
     --white: #fff;
 }
 
-li {
-    list-style: none;
-}
-
 body {
     background: var(--purple);
 }
 
-.hidden {
-    display: none;
-}
-
 header {
-    background-color: red;
-    display: flex;
-    justify-content: space-between;
     padding: 10px 50px;
 }
 
+header i {
+    color: white;
+    font-size: 24px;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+li a {
+    color: var(--white);
+}
+
+#divUser {
+    display: flex;
+    gap: 20px;
+    justify-content: end;
+}
+
+#divUser button {
+    width: 160px;
+}
+
+#divFormHome form{
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 40px;
+}
+
+#divFormHome input:first-child{
+    width: 220px;
+}
+
+.divTitle {
+    display: flex;
+}
+
+.hidden {
+    /* display: none; */
+    display: none !important;
+}
+
+
+
 section {
     display: flex;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
 }
 
-.profileSection, .usersSection {
-    padding-top : 60px;
+.profileSection,
+.usersSection {
+    padding-top: 60px;
 }
 
 .homeArticle {
-    border-radius: 6px;
+    border-radius: 12px;
     padding: 20px;
     width: 200px;
     background-color: white;
 }
 
 .profileArticle {
-    border-radius: 6px;
+    border-radius: 12px;
     padding: 20px;
     width: 400px;
     background-color: white;
     display: flex;
-    gap: 30px;
+    align-items: end;
+    gap: 36px;
 }
+
+.profileArticle > div:nth-child(2) {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile
 
 .usersArticle {
     border-radius: 6px;
@@ -67,10 +115,10 @@ section {
     gap: 30px
 }
 
-.usersArticle #divImg{
+.usersArticle #divImg {
     width: 120px;
     height: 120px;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .usersArticle img {
@@ -78,16 +126,10 @@ section {
     object-fit: cover;
 }
 
-article > div {
+article>div {
     display: flex;
     flex-direction: column;
     gap: 20px;
-}
-
-form {
-    display: flex;
-    justify-content: center;
-    padding: 40px 0px;
 }
 
 #divImg {
@@ -105,9 +147,47 @@ form {
     margin-left: -50px;
 }
 
+
+button,
+.button {
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--white);
+    background: var(--gradient1);
+    width: 100%;
+    padding: 9px;
+    border-radius: 8px;
+    border: none;
+    height: 42px;
+    transition: 0.3s;
+}
+
+button:hover,
+.button:hover {
+    font-size: 14.5px;
+    cursor: pointer;
+    background: var(--gradient1-pale);
+    width: 100%;
+}
+
+.squareBtn {
+    width: 34px;
+    height: 34px;
+    width: inherit;
+}
+
+.squareBtn:hover {
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    background: var(--gradient1-pale);
+}
+
 /* Menú hamburguesa */
 
-.menu{
+.menu {
     margin-left: 20px;
     padding: 18PX 20px;
     position: fixed;
@@ -127,17 +207,106 @@ header nav img {
     margin-top: 20px;
 }
 
-header nav ul, header nav input {
+header nav ul,
+header nav input {
     visibility: hidden;
     opacity: 0;
     transition: visibility 0s, opacity 0.2s ease-in-out;
 }
 
-header nav input:checked ~ ul{
+header nav input:checked~ul {
     visibility: visible;
     opacity: 100;
 }
 
-.hidden {
+h1 {
+    color: var(--white);
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+h2 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    background: var(--gradient2);
+    /* Establecer el fondo del texto */
+    -webkit-background-clip: text;
+    /* Clip del fondo en el texto para WebKit */
+    background-clip: text;
+    /* Propiedad estándar para otros navegadores */
+    -webkit-text-fill-color: transparent;
+    /* Hacer que el texto sea transparente para WebKit */
+}
+
+/* -------------------- POPUP -------------------- */
+
+.popup {
     display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    /* Asegura que el popup esté encima */
+}
+
+.popup-content {
+    background-color: white;
+    margin: 15% auto;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    position: relative;
+}
+
+.popup-content h2 {
+    padding-top: 8px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--purple);
+}
+
+form label,
+form>input {
+    margin-top: 18px;
+}
+
+.popup-content div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    right: 20px;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.warning {
+    color: red;
+    font-weight: 600;
+    padding-top: 12px;
 }
