@@ -20,11 +20,11 @@ app.set('view engine', 'pug');
 app.set('views','./views');
 
 const userRoutes = require("./routes/user.routes");
-// const adminRoutes = require("./routes/admin.routes")
+const jobOffersRoutes = require("./routes/jobOffers.routes")
 const viewsRoutes = require("./routes/views.routes");
 
-// app.use('/', userRoutes);
-// app.use('/', adminRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/joboffers', jobOffersRoutes);
 app.use('/', viewsRoutes);
 
 app.use('*', function(req, res){
