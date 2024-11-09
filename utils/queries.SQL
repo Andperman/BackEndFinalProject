@@ -9,7 +9,8 @@ CREATE TABLE users (
     role VARCHAR(10) DEFAULT 'user' CHECK (role IN ('admin', 'user'))
 );
 
--- Para crear usuarios no hace falta pasarle el rol, por defecto lo haremos con rol user. Dentro de la BBDD cambiaremos el rol si es necesario
+-- Para crear usuarios no hace falta pasarle el rol, por defecto lo haremos con rol user. 
+-- Dentro de la BBDD cambiaremos el rol si es necesario.
 INSERT INTO users(username, password, email, img)
 VALUES
 	('Bolito', '1234567', 'bolito@dominio.com', 'img.com')
