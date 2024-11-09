@@ -4,8 +4,10 @@ html(lang="en")
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     link(rel="stylesheet" href="/css/style.css")
+    //- Librería de iconos
     script(src="https://kit.fontawesome.com/415eb65d7d.js" crossorigin="anonymous")
-    title Home
+    title Profile
+  
   body
     header
         if isLogged
@@ -15,28 +17,25 @@ html(lang="en")
                     i.fa-solid.fa-bars#openMenu
                     i.fa-solid.fa-xmark.hidden#closeMenu
                 ul.menu
-                    li: a(href="./profile") Profile
+                    li: a(href="./home") Home
                     if role === 'admin'
                         li: a(href='/admin/dashboard') Dashboard
                     else if role === 'user'
                         li: a(href='/favorites') Favorites
                     button#logOut LOGOUT
-        else
-            div#divUser
-                button#logIn LOGIN
-                button#signUp SIGN UP
     main
-      form(action="/" method="post")
-        input(name="city" type="text" class="ghost-input" placeholder="Search for job offers!" required)
-        input(type="submit" class="search" value="SEARCH")
-      section
-          article.homeArticle
-            img(src="" alt="")
-            h1 Oferta de trabajo
+      section.profileSection
+        article.profileArticle
+          div
+            h1 Your profile
+            #divImg
+
+                img(src="../assets/img_prueba.jpg" alt="")
+          div
             ul
-              li Description
-              li URL
-              li Date
-            if scrapping
-              button#viewOffer VIEW OFFER
+              li #{username}
+              li #{email}
+              li #{password}
+            button#viewOffer EDIT PROFILE
+    
     script(src="/public/js/script.js")

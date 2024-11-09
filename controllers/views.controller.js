@@ -1,57 +1,78 @@
-// READ con GET
+// HOME
 const getHome = (req, res) => {
     try {
         let isLogged = true;
         let role = 'user';
+        scrapping = true;
         // -- FALTA CONSULTAR SQL PARA VER SI ES ADMIN O NO
-            res.status(200).render('home.pug', {
-                isLogged: isLogged,
-                role: role
-            });      
+        res.status(200).render('home', {
+            isLogged: isLogged,
+            role: role,
+            scrapping: scrapping
+        });
     }
-    catch (error) {
+    catch (error) { 
         console.log(`ERROR: ${error.stack}`);
-        res.status(400).json({msj:`ERROR: ${error.stack}`});
+        res.status(400).render('error', { errorCode: 400 });
     }
 }
 
-// const getSignup = (req, res) => {
-// try {
-//     res.status(200).render('contact.pug', {
-//         name: '--> Nombre creado desde controllers <--',
-//     });
-// }
-// catch (error) {
-//     console.log(`ERROR: ${error.stack}`);
-//     res.status(400).json({msj:`ERROR: ${error.stack}`});
-// }
-// }
+// PROFILE
+const getProfile = (req, res) => {
+    try {
+        let isLogged = false;
+        let role = 'user';
+        let username = 'Bolito';
+        let email = 'bolito@gmail.com';
+        let password = '******';
+        // -- FALTA CONSULTAR SQL PARA VER SI ES ADMIN O NO
+        // -- FALTA RECIBIR DATOS DE USERNAME, EMAIL, PASSWORD DE SQL
+        if (isLogged === true) {
+            res.status(200).render('profile', {
+                isLogged: isLogged,
+                role: role,
+                username: username,
+                email: email,
+                password: password
+            });
+        }else { // Error de no autorizado
+            res.status(401).render('error', { errorCode: 401 });
+        }
+        
+    }
+    catch (error) {
+        console.log(`ERROR: ${error.stack}`);
+        res.status(400).render('error', { errorCode: 400 });
+    }
+}
 
-// const getLogin = (req, res) => {
-// try {
-//     res.status(200).render('location.pug', {
-//         name: '--> Nombre creado desde controllers <--',
-//     });
-// }
-// catch (error) {
-//     console.log(`ERROR: ${error.stack}`);
-//     res.status(400).json({msj:`ERROR: ${error.stack}`});
-// }
-// }
-
-// const getFavorites = (req, res) => {
-// try {
-//     res.status(200).render('mission.pug', {
-//         name: '--> Nombre creado desde controllers <--',
-//     });
-// }
-// catch (error) {
-//     console.log(`ERROR: ${error.stack}`);
-//     res.status(400).json({msj:`ERROR: ${error.stack}`});
-// }
-// }
-
+// FAVORITES
+const getFavorites = (req, res) => {
+    try {
+        let isLogged = true;
+        let role = 'user';
+        scrapping = true;
+        // -- FALTA CONSULTAR SQL PARA VER SI ES ADMIN O NO
+        // -- FALTA RECIBIR DATOS DE USERNAME, EMAIL, PASSWORD DE SQL
+        if (isLogged === true && role === 'user') {
+            res.status(200).render('favorites', {
+                isLogged: isLogged,
+                role: role,
+                scrapping: scrapping
+            });
+        }else { // Error de no autorizado
+            res.status(401).render('error', { errorCode: 401 });
+        }
+        
+    }
+    catch (error) {
+        console.log(`ERROR: ${error.stack}`);
+        res.status(400).render('error', { errorCode: 400 });
+    }
+}
 
 module.exports = {
-getHome
+    getHome,
+    getProfile,
+    getFavorites
 }

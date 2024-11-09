@@ -15,11 +15,8 @@ html(lang="en")
                     i.fa-solid.fa-bars#openMenu
                     i.fa-solid.fa-xmark.hidden#closeMenu
                 ul.menu
-                    li: a(href="./profile") Profile
-                    if role === 'admin'
-                        li: a(href='/admin/dashboard') Dashboard
-                    else if role === 'user'
-                        li: a(href='/favorites') Favorites
+                    li: a(href='/favorites') Home
+                    li: a(href="./profile") Profile     
                     button#logOut LOGOUT
         else
             div#divUser
@@ -38,5 +35,5 @@ html(lang="en")
               li URL
               li Date
             if scrapping
-              button#viewOffer VIEW OFFER
+                button#viewOffer VIEW OFFER
     script(src="/public/js/script.js")
