@@ -15,11 +15,11 @@ const getUsersByEmail = async (req, res) => {
         if (userData) {
             res.status(200).json(userData);
         } else {
-            res.status(404).json({ error: 'Autor no encontrado' });
+            res.status(404).json({ error: 'User not found' });
         }
     } catch (error) {
-        console.error('Error al obtener autor por email:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        console.error('Error obtaining user by email:', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
 }
 
