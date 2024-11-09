@@ -38,8 +38,8 @@ section {
     justify-content: center;
 }
 
-.profileSection {
-    padding-top : 100px;
+.profileSection, .usersSection {
+    padding-top : 60px;
 }
 
 .homeArticle {
@@ -55,7 +55,27 @@ section {
     width: 400px;
     background-color: white;
     display: flex;
+    gap: 30px;
+}
+
+.usersArticle {
+    border-radius: 6px;
+    padding: 20px;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
     gap: 30px
+}
+
+.usersArticle #divImg{
+    width: 120px;
+    height: 120px;
+    overflow: hidden; 
+}
+
+.usersArticle img {
+    height: 100%;
+    object-fit: cover;
 }
 
 article > div {

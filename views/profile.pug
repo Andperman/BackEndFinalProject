@@ -24,16 +24,15 @@ html(lang="en")
                         li: a(href='/favorites') Favorites
                     button#logOut LOGOUT
     main
+      h1 Profile
       section.profileSection
         article.profileArticle
           div
-            h1 Your profile
+            h1 #{username}
             #divImg
-
                 img(src="../assets/img_prueba.jpg" alt="")
           div
             ul
-              li #{username}
               li #{email}
               li #{password}
             button#viewOffer EDIT PROFILE

@@ -13,14 +13,14 @@ const getHome = (req, res) => {
     }
     catch (error) { 
         console.log(`ERROR: ${error.stack}`);
-        res.status(400).render('error', { errorCode: 400 });
+        res.status(400).render('error', { statusCode: 400 });
     }
 }
 
 // PROFILE
 const getProfile = (req, res) => {
     try {
-        let isLogged = false;
+        let isLogged = true;
         let role = 'user';
         let username = 'Bolito';
         let email = 'bolito@gmail.com';
@@ -36,13 +36,13 @@ const getProfile = (req, res) => {
                 password: password
             });
         }else { // Error de no autorizado
-            res.status(401).render('error', { errorCode: 401 });
+            res.status(401).render('error', { statusCode: 401 });
         }
         
     }
     catch (error) {
         console.log(`ERROR: ${error.stack}`);
-        res.status(400).render('error', { errorCode: 400 });
+        res.status(400).render('error', { statusCode: 400 });
     }
 }
 
@@ -61,18 +61,71 @@ const getFavorites = (req, res) => {
                 scrapping: scrapping
             });
         }else { // Error de no autorizado
-            res.status(401).render('error', { errorCode: 401 });
+            res.status(401).render('error', { statusCode: 401 });
         }
         
     }
     catch (error) {
         console.log(`ERROR: ${error.stack}`);
-        res.status(400).render('error', { errorCode: 400 });
+        res.status(400).render('error', { statusCode: 400 });
+    }
+}
+
+// USERS VIEW (Only Admin)
+const getUsersView = (req, res) => {
+    try {
+        let isLogged = true;
+        let role = 'user';
+        let username = 'Bolito';
+        let email = 'bolito@gmail.com';
+        let password = '******';
+        // -- FALTA CONSULTAR SQL PARA VER SI ES ADMIN O NO
+        // -- FALTA RECIBIR DATOS DE USERNAME, EMAIL, PASSWORD DE SQL
+        if (isLogged === true && role === 'admin') {
+            res.status(200).render('users', {
+                isLogged: isLogged,
+                role: role,
+                username: username,
+                email: email,
+                password: password
+            });
+        }else { // Error de no autorizado
+            res.status(401).render('error', { statusCode: 401 });
+        }
+        
+    }
+    catch (error) {
+        console.log(`ERROR: ${error.stack}`);
+        res.status(400).render('error', { statusCode: 400 });
+    }
+}
+
+// DASHBOARD (Only Admin)
+const getDashboard = (req, res) => {
+    try {
+        let isLogged = true;
+        let role = 'user';
+        // -- FALTA CONSULTAR SQL PARA VER SI ES ADMIN O NO
+        // -- FALTA RECIBIR DATOS DE USERNAME, EMAIL, PASSWORD DE SQL
+        if (isLogged === true && role === 'admin') {
+            res.status(200).render('dashboard', {
+                isLogged: isLogged,
+                role: role
+            });
+        }else { // Error de no autorizado
+            res.status(401).render('error', { statusCode: 401 });
+        }
+        
+    }
+    catch (error) {
+        console.log(`ERROR: ${error.stack}`);
+        res.status(400).render('error', { statusCode: 400 });
     }
 }
 
 module.exports = {
     getHome,
     getProfile,
-    getFavorites
+    getFavorites,
+    getUsersView
 }
