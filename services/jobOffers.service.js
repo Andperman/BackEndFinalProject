@@ -12,8 +12,8 @@ const getJobOfferById = async (id) => {
 };
 
 const createJobOffer = async (JobOfferdata) => {
-    const JobOffer = new JobOffer(JobOfferdata);
-    return await JobOffer.save();
+    const jobOffer = new JobOffer(JobOfferdata);
+    return await jobOffer.save();
 };
 //aqui se pasa el id de objeto mongoDB
 const editJobOffer = async (id, data) => {
