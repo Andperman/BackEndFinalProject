@@ -5,7 +5,7 @@ const User = require('../models/user.model'); // Importar el modelo de la BBDD
 const getAllUsers = async (req, res) => {
     let users;
     users = await User.getAllUsers();
-    
+
     res.status(200).json(users); // 
 }
 const getUsersByEmail = async (req, res) => {
@@ -23,10 +23,8 @@ const getUsersByEmail = async (req, res) => {
     }
 }
 
-
-
 // Crear usuario //Post
-const createUser= async (req, res) => {
+const createUser = async (req, res) => {
     const newUser = req.body; // {username,email,password, img}
     const response = await User.createUser(newUser);
     res.status(201).json({
@@ -56,7 +54,7 @@ const updateUserByEmail = async (req, res) => {
 }
 
 const deleteUserByEmail = async (req, res) => {
-    const userToDelete = req.body.email; // {email} le pasaremos el email por el body del postman
+    const userToDelete = req.body.email; // {email} le pasaremos el email por el body
     try {
         const response = await User.deleteUserByEmail(userToDelete);
         if (response) {
@@ -72,7 +70,6 @@ const deleteUserByEmail = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 }
-
 
 module.exports = {
     getAllUsers,
