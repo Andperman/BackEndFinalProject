@@ -6,18 +6,24 @@
 
 :root {
     --purple: #3f3752;
-    --gradient1: linear-gradient(130deg, #762cee, #ff44b7, #fcbf49);
-    --gradient1-pale: linear-gradient(130deg, #9961f4, #fa77c8, #fad58b);
-    --gradient2: linear-gradient(130deg, #ff49b9, #ffb623);
+    --gradient1: linear-gradient(129deg, rgba(36,224,201,1) 0%, rgba(130,120,231,1) 100%);
+    --gradient1-pale: linear-gradient(129deg, rgb(94, 231, 215) 0%, rgb(172, 166, 237) 100%);
+    --gradient2:linear-gradient(129deg, rgb(7, 203, 180) 0%, rgb(93, 81, 222) 100%);
+    --black: #1d1d1d;
     --white: #fff;
+    --white-opacity: rgba(255, 255, 255, 0.23);
+    --white-opacity-2: rgba(255, 255, 255, 0.348);
 }
 
 body {
-    background: var(--purple);
+    background: var(--gradient1);
+    background-repeat: none;
+    height: 100vh;
+    padding: 0px 10%;
 }
 
 header {
-    padding: 10px 50px;
+    padding: 10px 0px;
 }
 
 header i {
@@ -59,6 +65,9 @@ li a {
 
 .divTitle {
     display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 50px;
 }
 
 .hidden {
@@ -75,11 +84,6 @@ section {
     justify-content: center;
 }
 
-.profileSection,
-.usersSection {
-    padding-top: 60px;
-}
-
 .homeArticle {
     border-radius: 12px;
     padding: 20px;
@@ -87,11 +91,15 @@ section {
     background-color: white;
 }
 
+.homeArticle button {
+    background: var(--black);
+}
+
 .profileArticle {
     border-radius: 12px;
-    padding: 20px;
+    padding: 40px 60px;
     width: 400px;
-    background-color: white;
+    background-color: var(--white-opacity-2);
     display: flex;
     align-items: end;
     gap: 36px;
@@ -104,7 +112,26 @@ section {
     align-items: center;
 }
 
-.profile
+.profileArticle ul {
+    display: flex;
+    flex-direction: column;
+    gap: 12px
+}
+.profileArticle li {
+    display: flex;
+    flex-direction: column;
+    gap: 6px
+}
+
+.profileArticle div:last-child {
+    display: flex;
+    align-items: start;
+    gap: 6px;
+}
+
+.profileArticle p {
+    color: rgba(0, 0, 0, 0.538)
+}
 
 .usersArticle {
     border-radius: 6px;
@@ -155,8 +182,7 @@ button,
     font-weight: 600;
     font-size: 14px;
     color: var(--white);
-    background: var(--gradient1);
-    width: 100%;
+    background: var(--white-opacity);
     padding: 9px;
     border-radius: 8px;
     border: none;
@@ -168,21 +194,19 @@ button:hover,
 .button:hover {
     font-size: 14.5px;
     cursor: pointer;
-    background: var(--gradient1-pale);
-    width: 100%;
+    background: var(--black);
 }
 
 .squareBtn {
     width: 34px;
     height: 34px;
     width: inherit;
+    background: var(--black);
 }
 
 .squareBtn:hover {
-    width: 34px;
-    height: 34px;
+    font-size: inherit;
     cursor: pointer;
-    background: var(--gradient1-pale);
 }
 
 /* Menú hamburguesa */
@@ -195,7 +219,7 @@ button:hover,
 
 header nav ul {
     list-style: none;
-    background-color: rgb(134, 67, 205);
+    background-color: var(--black);
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -265,6 +289,11 @@ h2 {
 
 .popup-content h2 {
     padding-top: 8px;
+    color: var(--black);
+}
+
+.popup-content .button {
+    background: var(--black);
 }
 
 form {

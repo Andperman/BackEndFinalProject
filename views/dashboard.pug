@@ -20,9 +20,10 @@ html(lang="en")
                     i.fa-solid.fa-bars#openMenu
                     i.fa-solid.fa-xmark.hidden#closeMenu
                 ul.menu
-                    li: a(href="./profile") Profile
+                    li: a(href="/") Home
+                    li: a(href="/profile") Profile
                     if role === 'admin'
-                        li: a(href='/admin/dashboard') Dashboard
+                        li: a(href='/dashboard') Dashboard
                     else if role === 'user'
                         li: a(href='/favorites') Favorites
                     button#logOut LOGOUT
@@ -32,22 +33,23 @@ html(lang="en")
                 button#signUp SIGN UP
     main
         div
+        div#popupAddOffer.popup
+            div.popup-content
+                span.close#closePopupAddOffer <i class="fa-solid fa-xmark"></i>
+                h2 Create a job offer
+                form#formNewOffer(action="/api/ads" method="POST")
+                    div
+                        label(for="title") Title:
+                        input(type="text" name="title" placeholder="Title" required)
+                    div
+                        label(for="description") Description:
+                        input(type="text" name="description" placeholder="Description" required)
+                    //- PONER AQUÍ LOS DOCUMENTOS DE MONGODB
+                    input.button(type="submit" value="CREATE JOB OFFER")
+                    .warningDiv
+        section.divTitle
             h1 Your Job Offers
-            button#addOffer.squareBtn <i class="fa-solid fa-plus"></i>
-            div#popupAddOffer.popup
-                div.popup-content
-                    span.close#closePopupAddOffer <i class="fa-solid fa-xmark"></i>
-                    h2 Create a job offer
-                    form#formNewOffer(action="/api/ads" method="POST")
-                        div
-                            label(for="title") Title:
-                            input(type="text" name="title" placeholder="Title" required)
-                        div
-                            label(for="description") Description:
-                            input(type="text" name="description" placeholder="Description" required)
-                        //- PONER AQUÍ LOS DOCUMENTOS DE MONGODB
-                        input.button(type="submit" value="CREATE JOB OFFER")
-                        .warningDiv
+            button#addOffer Add an offer <i class="fa-solid fa-plus"></i>
         section
             article.homeArticle
                 h2 Oferta de trabajo

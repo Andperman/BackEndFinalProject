@@ -17,7 +17,7 @@ html(lang="en")
                     i.fa-solid.fa-bars#openMenu
                     i.fa-solid.fa-xmark.hidden#closeMenu
                 ul.menu
-                    li: a(href="./home") Home
+                    li: a(href="/") Home
                     if role === 'admin'
                         li: a(href='/admin/dashboard') Dashboard
                     else if role === 'user'
@@ -28,19 +28,20 @@ html(lang="en")
       h1 Profile
     section.profileSection
       article.profileArticle
-        div
-          h2 #{username}
-          #divImg
+        div#divImg
               img(src="../assets/img_prueba.jpg" alt="")
         div
           ul
+            li  
+              p username
+              h3 #{username}
             li 
-              h3 Email
-              p #{email}
+              p Email
+              h3 #{email}
             li 
-              h3 Password
-              p #{password}
-          div 
+              p Password
+              h3 #{password}
+          div
             button#editUser.squareBtn <i class="fa-solid fa-pen"></i>
             button#eraseUser.squareBtn <i class="fa-solid fa-trash"></i>
   
