@@ -1,0 +1,107 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet" href="/css/style.css")
+    //- Librería de iconos
+    script(src="https://kit.fontawesome.com/415eb65d7d.js" crossorigin="anonymous")
+    //- Google Fonts
+    link(rel="preconnect", href="https://fonts.googleapis.com")
+    link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
+    link(href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins:wght@400;500;600;700;800&display=swap", rel="stylesheet")
+
+    title Users
+  
+  body
+    header
+        if isLogged
+            nav
+                input(type="checkbox" id="checkboxMenu")
+                label(for="checkboxMenu")
+                    i.fa-solid.fa-bars#openMenu
+                    i.fa-solid.fa-xmark.hidden#closeMenu
+                ul.menu
+                    li: a(href="./home") Home
+                    if role === 'admin'
+                        li: a(href='/admin/dashboard') Dashboard
+                    else if role === 'user'
+                        li: a(href='/favorites') Favorites
+                    button#logOut LOGOUT
+    main
+        h1 Users
+        section.usersSection
+            article.usersArticle
+                div
+                    #divImg
+                        img(src="../assets/img_prueba.jpg" alt="")
+                div
+                    h2 #{username}
+                    ul
+                        li #{email}
+                        li #{password}
+                    div 
+                        button#editUser <i class="fa-solid fa-pen"></i>
+                        button#eraseUser <i class="fa-solid fa-trash"></i>
+            article.usersArticle
+                div
+                    #divImg
+                        img(src="../assets/img_prueba.jpg" alt="")
+                div
+                    h2 #{username}
+                    ul
+                        li #{email}
+                        li #{password}
+                    div 
+                        button#editUser <i class="fa-solid fa-pen"></i>
+                        button#eraseUser <i class="fa-solid fa-trash"></i>
+            article.usersArticle
+                div
+                    #divImg
+                        img(src="../assets/img_prueba.jpg" alt="")
+                div
+                    h2 #{username}
+                    ul
+                        li #{email}
+                        li #{password}
+                    div 
+                        button#editUser <i class="fa-solid fa-pen"></i>
+                        button#eraseUser <i class="fa-solid fa-trash"></i>
+            article.usersArticle
+                div
+                    #divImg
+                        img(src="../assets/img_prueba.jpg" alt="")
+                div
+                    h2 #{username}
+                    ul
+                        li #{email}
+                        li #{password}
+                    div 
+                        button#editUser <i class="fa-solid fa-pen"></i>
+                        button#eraseUser <i class="fa-solid fa-trash"></i>
+            article.usersArticle
+                div
+                    #divImg
+                        img(src="../assets/img_prueba.jpg" alt="")
+                div
+                    h2 #{username}
+                    ul
+                        li #{email}
+                        li #{password}
+                    div 
+                        button#editUser <i class="fa-solid fa-pen"></i>
+                        button#eraseUser <i class="fa-solid fa-trash"></i>
+            article.usersArticle
+                div
+                    #divImg
+                        img(src="../assets/img_prueba.jpg" alt="")
+                div
+                    h2 #{username}
+                    ul
+                        li #{email}
+                        li #{password}
+                    div 
+                        button#editUser <i class="fa-solid fa-pen"></i>
+                        button#eraseUser <i class="fa-solid fa-trash"></i>
+    
+    script(src="/js/script.js")

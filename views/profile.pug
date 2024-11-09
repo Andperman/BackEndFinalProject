@@ -1,0 +1,48 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet" href="/css/style.css")
+    //- Librería de iconos
+    script(src="https://kit.fontawesome.com/415eb65d7d.js" crossorigin="anonymous")
+    title Profile
+  
+  body
+    header
+        if isLogged
+            nav
+                input(type="checkbox" id="checkboxMenu")
+                label(for="checkboxMenu")
+                    i.fa-solid.fa-bars#openMenu
+                    i.fa-solid.fa-xmark.hidden#closeMenu
+                ul.menu
+                    li: a(href="/") Home
+                    if role === 'admin'
+                        li: a(href='/admin/dashboard') Dashboard
+                    else if role === 'user'
+                        li: a(href='/favorites') Favorites
+                    button#logOut LOGOUT
+    main
+    section.divTitle
+      h1 Profile
+    section.profileSection
+      article.profileArticle
+        div#divImg
+              img(src="../assets/img_prueba.jpg" alt="")
+        div
+          ul
+            li  
+              p username
+              h3 #{username}
+            li 
+              p Email
+              h3 #{email}
+            li 
+              p Password
+              h3 #{password}
+          div
+            button#editUser.squareBtn <i class="fa-solid fa-pen"></i>
+            button#eraseUser.squareBtn <i class="fa-solid fa-trash"></i>
+  
+    script(src="/js/script.js")
