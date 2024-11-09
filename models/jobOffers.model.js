@@ -3,22 +3,22 @@ require('../config/db_mongo') // Conexión a BBDD MongoDB
 
 
 const objectSchema = {
-    companyName: { 
+    title: { 
         type: String, 
         required: true,
-        unique: true 
+        unique: false
     },
 
-    CIF: {
+    description: {
         type: String, 
         required: true,
-        unique: true 
+        unique: false
 
     },
-    adress: {
+    imageurl: {
         type: String, 
         required: true,
-        unique: true 
+        unique: false 
 
     },
     website: {
@@ -32,8 +32,13 @@ const objectSchema = {
                     return false;
                 }
             }, 
-            message: "Porfa, introduce una URL válida"
+            message: "Please, enter a valid URL"
         }
+    },
+    date: {
+        type: Date,
+        required: true
+
     }
     
 }
