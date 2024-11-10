@@ -1,5 +1,6 @@
 const pool = require('../config/db_pgSQL')
 const queries = require('../utils/queries.js') // Queries SQL
+//falta favoritos
 
 
 // GET
