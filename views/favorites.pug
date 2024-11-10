@@ -20,18 +20,45 @@ html(lang="en")
             div#divUser
               button#signup Sign Up
               button#login Log In  
-    main
-      form(action="/" method="post")
-        input(name="city" type="text" class="ghost-input" placeholder="Search for job offers!" required)
-        input(type="submit" class="search" value="SEARCH")
+    body  
       section
-          article.homeArticle
-            img(src="" alt="")
-            h2 Oferta de trabajo
-            ul
-              li Description
-              li URL
-              li Date
-            if scrapping
+          article.offerArticle
+            div
+              h2 Oferta de trabajo
+              div.divStars
+                i.fa-solid.fa-star
+                i.fa-regular.fa-star
+            div
+              ul
+                li Description
+                li URL
+                li Date
+              if scrapping
+                button#viewOffer VIEW OFFER
+          article.offerArticle
+            div
+              h2 Oferta de trabajo
+              div.divStars
+                i.fa-solid.fa-star
+                i.fa-regular.fa-star
+            div
+              ul
+                li Description
+                li URL
+                li Date
+              if scrapping
+                button#viewOffer VIEW OFFER
+          article.offerArticle
+            div
+              h2 Oferta de trabajo
+              div.divStars
+                i.fa-solid.fa-star
+                i.fa-regular.fa-star
+            div
+              ul
+                li Description
+                li URL
+                li Date
+              if scrapping
                 button#viewOffer VIEW OFFER
     script(src="/js/script.js")

@@ -84,14 +84,14 @@ section {
     justify-content: center;
 }
 
-.homeArticle {
+.offerArticle {
     border-radius: 12px;
     padding: 20px;
     width: 200px;
     background-color: white;
 }
 
-.homeArticle button {
+.offerArticle button {
     background: var(--black);
 }
 
@@ -230,6 +230,10 @@ button:hover,
 #divAdmin h2 {
     color: var(--white);
     -webkit-text-fill-color: var(--white);
+}
+
+.offerArticle div:first-child, .favoritesArticle div:first-child {
+    display: flex;
 }
 
 /* Menú hamburguesa */
