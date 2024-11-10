@@ -1,8 +1,8 @@
 // HOME
 const getHome = (req, res) => {
     try {
-        let isLogged = false;
-        let role = 'user';
+        let isLogged = true;
+        let role = 'admin';
         scrapping = true;
         // -- FALTA CONSULTAR SQL PARA VER SI ES ADMIN O NO
         res.status(200).render('home', {

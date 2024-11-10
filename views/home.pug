@@ -1,23 +1,15 @@
 doctype html
 html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    link(rel="stylesheet" href="/css/style.css")
-    script(src="https://kit.fontawesome.com/415eb65d7d.js" crossorigin="anonymous")
-    //- Google Fonts
-    link(rel="preconnect", href="https://fonts.googleapis.com")
-    link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
-    link(href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins:wght@400;500;600;700;800&display=swap", rel="stylesheet")
-
+  include ./head.pug
     title Home
   body
     header
         if isLogged
             nav
+                input(type="checkbox" id="checkboxMenu")
                 label(for="checkboxMenu")
-                    i.fa-solid.fa-bars#openMenu
-                    i.fa-solid.fa-xmark#closeMenu.hidden
+                  i.fa-solid.fa-bars#openMenu
+                  i.fa-solid.fa-xmark#closeMenu.hidden
                 ul.menu
                     li: a(href="./profile") Profile
                     if role === 'admin'
@@ -27,8 +19,8 @@ html(lang="en")
                     button#logOut LOGOUT
         else
             div#divUser
-                button#signup Sign Up
-                button#login Log In    
+              button#signup Sign Up
+              button#login Log In    
     main
       // Popup de SignUp/Login
       div#popupSignUp.popup
@@ -57,6 +49,7 @@ html(lang="en")
                   label(for="loginPass") Password:
                   input#loginPass(type="password" name="pass" placeholder="Your password goes here" required)
               input.button(type="submit" value="LOGIN")
+    if role !== 'admin'
       section#divFormHome
         form(action="/" method="post")
           input(name="search" type="text" placeholder="Search for job offers!" required)
@@ -101,4 +94,14 @@ html(lang="en")
                 li Date
               if scrapping
                 button#viewOffer VIEW OFFER
+    else
+      section#divAdmin 
+        a(href='/users').button
+          i.fa-solid.fa-users 
+          h2 Users
+        a(href='/dashboard').button
+          i.fa-solid.fa-solar-panel   
+          h2 Dashboard
+          
+
   script(src="/js/script.js")

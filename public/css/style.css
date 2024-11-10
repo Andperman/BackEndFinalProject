@@ -209,6 +209,29 @@ button:hover,
     cursor: pointer;
 }
 
+#divAdmin {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+#divAdmin a {
+    padding: 30px 40px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+#divAdmin i {
+    font-size: 46px;
+}
+
+#divAdmin h2 {
+    color: var(--white);
+    -webkit-text-fill-color: var(--white);
+}
+
 /* Menú hamburguesa */
 
 .menu {
