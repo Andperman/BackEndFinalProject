@@ -19,10 +19,11 @@ html(lang="en")
                 ul.menu
                     li: a(href="/") Home
                     if role === 'admin'
-                        li: a(href='/admin/dashboard') Dashboard
+                      li: a(href='/admin/dashboard') Dashboard
                     else if role === 'user'
-                        li: a(href='/favorites') Favorites
-                    button#logOut LOGOUT
+                      li: a(href='/favorites') Favorites
+                      li: a(href='/profile') Profile
+                    button#logOut(onclick= "window.location.href='/'") LOGOUT
     main
     section.divTitle
       h1 Profile

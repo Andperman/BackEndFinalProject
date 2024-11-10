@@ -56,6 +56,16 @@ if (document.querySelector("#popupAddOffer")) {
     };
 }
 
+// if (document.querySelector("#logOut")) {
+//     // Mostrar/Ocultar Create Job Offer -------
+//     let btnLogOut = document.querySelector('#logOut');
+
+//     btnLogOut.onclick = function () {
+//         popupAddOffer.style.display = 'block';
+//     };
+
+// }
+
 
 
 // // Cerrar popup si se hace click fuera -------
@@ -71,3 +81,38 @@ if (document.querySelector("#popupAddOffer")) {
 //     }
 // };
 
+// PINTAR RESULTADOS DE BÚSQUEDA EN EL DOM
+// Se hace una parte en el front porque hay que acceder al DOM
+const paintOffers = async () => {
+
+    // Ejemplo de lo que recibiríamos (borrar):
+    let example = [
+        {
+            title: "Se busca a Bolito",
+            description: "Bolito es el mejor freelancer. Te necesitamos Bolito :(",
+            date: "12/10/24",
+            url: "www.ejemplo.com"
+        },
+        {
+            title: "Necesitamos freelancer con experiencia",
+            description: "Blablabla ejemplo balsdnashdjafhans nlasdkjsakd",
+            date: "15/10/24",
+            url: "www.ejemplo.com"
+        }
+    ]
+
+    // Pintar resultados
+    let section = document.querySelector("section");
+    section.innerHTML = "";
+
+    example.forEach(result => {
+        section.innerHTML += `
+            <article>
+                <h2>${result.title}</h2>
+                <p>${result.description}</p>
+                <p>${result.date}</p>
+                <a src=${result.url}></a>
+            </article>
+        `
+    })
+}

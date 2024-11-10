@@ -9,6 +9,7 @@ router.get('/favorites', viewsController.getFavorites);
 router.get('/users', viewsController.getUsersView);
 router.get('/dashboard', viewsController.getDashboard);
 
+// Formulario de búsqueda de ofertas de trabajo situado en Home
 router.post('/', viewsController.searchJobOffers);
 
 module.exports = router;
