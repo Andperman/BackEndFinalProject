@@ -28,7 +28,7 @@ const extractProductData = async (url, browser) => {
         return { error: err }; 
     }
 };
-
+// Función para realizar el scraping de Workana
 const scrap = async (url) => {
     try {
       // Creamos un array vacío scrapedData donde almacenaremos la información obtenida del scraping (se alamcenan los objetos)
@@ -76,6 +76,69 @@ const scrap = async (url) => {
         console.log("Error:", err);
     }
 };
-
+// Exportar la funcion de scraping
 exports.scrap = scrap;
 
+//Función extraer la informacion de cada aanuncio
+const getFreelancerJobData = async (url, browser) => {
+    try {
+        const jobData = {}; // Creamos un objeto vacío para almacenar los datos de cada trabajo freelance
+        const page = await browser.newPage(); // Abrimos una nueva pestaña
+        // Accedemos al link de cada trabajo que nos llega por parámetros
+        await page.goto(url)
+
+        // Extraemos los datos de cada trabajo freelance
+        jobData['title'] = await page.$eval("#app > div > div > div.flex-fill.mb-2.mb-0.mr-md-4.mt-md-0.p-5 > h1", title => title.innerHTML.trim().replace(/\n+/g, ' ').replace(/\s+/g, ' '));
+        jobData['description'] = await page.$eval("#app > div > div > div.flex-fill.mb-2.mb-0.mr-md-4.mt-md-0.p-5 > div.pt-4.pb-4 > div.profile-detail-text", description => description.innerText.slice(0,250).trim().replace(/\n+/g, ' ').replace(/\s+/g, ' ') + '...');
+        jobData['data'] = await page.$eval("#app > div > div > div.flex-fill.mb-2.mb-0.mr-md-4.mt-md-0.p-5 > div:nth-child(5) > div > div:nth-child(1) > div.flex-fill", data => data.innerHTML);
+        jobData['url'] = await page.url();
+       
+        await page.close();
+
+        return jobData; // Devolvemos los datos extraídos de cada trabajo freelance
+
+    } catch (err) {
+        return { error: err }; 
+    }
+};
+
+// Función para realizar el scraping de soyFreelancer
+const scrapeFreelancerJobs = async (url) => {
+    try {
+      const scrapedData = []; // Array vacío para almacenar los datos de los trabajos freelance
+      const browser = await puppeteer.launch({ headless: true }); // Inicializamos el navegador
+      console.log("Opening the browser......");
+
+      const page = await browser.newPage(); // Abrimos una nueva página
+      await page.goto(url); // Cargamos la URL proporcionada
+      console.log(`Navigating to ${url}...`);
+
+      // Extraemos los links de los trabajos freelance
+      const tmpurls = await page.$$eval("h2.jobSubTitle a", links => links.map(a => a.href));
+
+      // Quitamos los duplicados
+      const urls = tmpurls.filter((link, index) => tmpurls.indexOf(link) === index);
+      console.log("URLs capturadas", urls);
+
+      // Limitar a los primeros 10 trabajos freelance para evitar largos tiempos de carga
+      const urls2 = urls.slice(0, 10);
+
+      // Iteramos sobre las URLs de los trabajos freelance y extraemos los datos de cada uno
+      for (let jobLink of urls2) {
+          const job = await getFreelancerJobData(jobLink, browser);  // Llamamos a la función getFreelancerJobData para cada URL
+          scrapedData.push(job);
+      }
+
+      console.log(scrapedData, "Datos obtenidos de los trabajos freelance", scrapedData.length);
+
+      await browser.close(); // Cerramos el navegador
+
+      return scrapedData; // Devolvemos los datos obtenidos
+
+    } catch (err) {
+        console.log("Error:", err);
+    }
+};
+
+// Exportar la funcion de scraping
+exports.scrapeFreelancerJobs = scrapeFreelancerJobs;
