@@ -10,14 +10,11 @@ const queries = {
     VALUES ($1,$2,$3,$4)
     `,
     updateUserByEmail: `UPDATE users
-    SET name = $1, email = $2, password = $3, img = $4
+    SET username = $1, email = $2, password = $3, img = $4
     WHERE email = $5
     `,
     deleteUserByEmail: `DELETE FROM users
-    WHERE id_user = 
-    (SELECT id_user 
-    FROM users 
-    WHERE email = $1);
+    WHERE email = $1;
     `,
     
 }

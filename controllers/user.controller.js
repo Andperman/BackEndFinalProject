@@ -29,20 +29,20 @@ const createUser = async (req, res) => {
     const response = await User.createUser(newUser);
     res.status(201).json({
         "items_created": response,
-        message: `Usuario creado: ${req.body.email}`,
+        message: `User created: ${req.body.email}`,
         data: newUser
     });
 }
 // Actualizar Autor por email
 const updateUserByEmail = async (req, res) => {
-    const updatedUser = req.body; // {name, surname, image, email, currentEmail}
-    const currentEmail = req.body.currentEmail; // current email como criterio de búsqueda de autor
+    const { email } = req.query; // {name, surname, image, email, currentEmail}
+    const updatedUserData = req.body; // current email como criterio de búsqueda de autor
     try {
-        const response = await author.updateUserByEmail(updatedUser, currentEmail);
+        const response = await User.updateUserByEmail(email);
         if (response) {
             res.status(200).json({
-                message: `Usuario actualizado: ${currentEmail}`,
-                data: updatedUser
+                message: `User updated: ${email}`,
+                data: updatedUserData
             });
         } else {
             res.status(404).json({ error: 'User not found' });
@@ -54,12 +54,12 @@ const updateUserByEmail = async (req, res) => {
 }
 
 const deleteUserByEmail = async (req, res) => {
-    const userToDelete = req.body.email; // {email} le pasaremos el email por el body
+    const { email } = req.query; // {email} le pasaremos el email por el body
     try {
-        const response = await User.deleteUserByEmail(userToDelete);
+        const response = await User.deleteUserByEmail(email);
         if (response) {
             res.status(200).json({
-                message: `Se ha borrado: ${userToDelete}`,
+                message: `User: ${email} was deleted successfully`,
                 data: response
             });
         } else {

@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "723b89a0-c117-4c67-a0ce-1889d455163f",
+		"name": "api/user",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39566229"
+	},
+	"item": [
+		{
+			"name": "Create user with role user by default",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"username\": \"Peluson\",\n        \"email\": \"tortilla@gmail.com\",\n        \"password\": \"12343aaaaa$Qa\",\n        \"img\": \"www.img22.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/user/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/user/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user by email, by query",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "update user by email, by query",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"username\": \"Peluson editado\",\n        \"email\": \"tortilllla@gmail.com\",\n        \"password\": \"12343aaaaa$Qa\",\n        \"img\": \"www.img22.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/user/email?email=queso@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"email"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "queso@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete user by email, by query",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/user/email?email=queso2@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"email"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "queso2@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
