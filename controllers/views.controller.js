@@ -123,6 +123,7 @@ const getDashboard = (req, res) => {
     }
 }
 
+// Función asíncrona porque se hará el fetch del scrapping y MongoDB
 const searchJobOffers = async (req, res) => {
     try {
 
@@ -130,35 +131,10 @@ const searchJobOffers = async (req, res) => {
         let search = req.body.search;
         // -- AQUÍ FALTA LA LLAMADA AL SCRAPPING CON ELTEXTO BUSCADO
         // Poner aquí el fetch y el await
-        
-        // Ejemplo de lo que recibiríamos (borrar):
-        let example = [
-            {
-                title: "Se busca a Bolito",
-                description: "Bolito es el mejor freelancer. Te necesitamos Bolito :(",
-                date: "12/10/24",
-                url: "www.ejemplo.com"
-            },
-            {
-                title: "Necesitamos freelancer con experiencia",
-                description: "Blablabla ejemplo balsdnashdjafhans nlasdkjsakd",
-                date: "15/10/24",
-                url: "www.ejemplo.com"
-            }
-        ]
-        // Pintar resultados
-        let section = document.querySelector("section");
-        section.innerHTML = "";
-        example.forEach(result => {
-            section.innerHTML += `
-                <article>
-                    <h2>${result.title}</h2>
-                    <p>${result.description}</p>
-                    <p>${result.date}</p>
-                    <a src=${result.url}></a>
-                </article>
-            `
-        })
+        const response = await fetch(search);
+        const data = response.json();
+
+        // Llamar al front para que pinte
     }
     catch (error) {
         console.log(`ERROR: ${error.stack}`);
