@@ -3,35 +3,29 @@ require('../config/db_mongo') // Conexión a BBDD MongoDB
 
 
 const objectSchema = {
-    title: { 
-        type: String, 
+    title: {
+        type: String,
         required: true,
         unique: false
     },
 
     description: {
-        type: String, 
+        type: String,
         required: true,
         unique: false
-
-    },
-    imageurl: {
-        type: String, 
-        required: true,
-        unique: false 
 
     },
     website: {
         type: String,
         required: true,
         validate: {
-            validator: function(url){
-                if(url.indexOf('http') != -1)
+            validator: function (url) {
+                if (url.indexOf('http') != -1)
                     return true;
                 else {
                     return false;
                 }
-            }, 
+            },
             message: "Please, enter a valid URL"
         }
     },
@@ -40,7 +34,7 @@ const objectSchema = {
         required: true
 
     }
-    
+
 }
 
 // Crear el esquema
