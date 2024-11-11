@@ -1,4 +1,6 @@
 const express = require('express') //importamos paquete express
+const swaggerUi = require('swagger-ui-express');//documentacion de la app
+const swaggerDocument = require('./swagger.json');
 const app = express() // inicializar servidor con express
 const port = 3000;
 const jwt = require("jsonwebtoken");
@@ -39,6 +41,7 @@ app.use('/', viewsRoutes);
 app.use(routes); //añadido andrea
 app.use(authRoutes);
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));//inicializamos ruta de la documentación
 app.use('*', function(req, res){
     res.status(404).render('error', { statusCode: 400 })
 });

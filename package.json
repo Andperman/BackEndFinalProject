@@ -27,6 +27,8 @@
     "passport-google-oauth20": "^2.0.0",
     "pg": "^8.13.1",
     "pug": "^3.0.3",
-    "puppeteer": "^23.7.1"
+    "puppeteer": "^23.7.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   }
 }
