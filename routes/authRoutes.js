@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const authMiddleware = require('../middlewares/authMiddleware');
+const authorizeRole = require('../middlewares/roleMiddleware');
+
+// Controladores
 const { register, login, logout } = require('../controllers/authController');
 const { getProfile, getFavorites } = require('../controllers/userController');
 const { getUsers, createAd, getDashboard } = require('../controllers/adminController');
-const authMiddleware = require('../middlewares/authMiddleware');
-const authorizeRole = require('../middlewares/roleMiddleware');
 
 // Rutas de autenticación
 router.get('/register', (req, res) => res.render('register'));  // Registro
