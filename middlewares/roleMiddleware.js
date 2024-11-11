@@ -1,3 +1,4 @@
+//Aseguraramos que solo los usuarios con el rol adecuado puedan acceder a ciertas rutas protegidas.
 function authorizeRole(role) {
     return (req, res, next) => {
         if (req.user && req.user.role === role) {

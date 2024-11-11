@@ -12,14 +12,20 @@ dotenv.config();
 //Logger
 const morgan = require("./middlewares/morgan")
 app.use(morgan(':method :url :status - :response-time ms :body'));
-app.use(express.json()); // Middleware para parsear el body de las peticiones
+
 //habilitar static
 app.use(express.static('public'));//middleware para servir archivos estáticos de front: CSS, JS, Assets
 app.use(express.urlencoded({ extended: true })); //Middleware puppeteer 
 app.use(cookieParser());  //Middleware cookieParser
+app.use(express.json()); // Middleware para parsear el body de las peticiones
 //PUG views
 app.set('view engine', 'pug');
 app.set('views','./views');
+
+//Inicializamos passport y la session de passport
+app.use(session({ secret: 'SECRET' }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 const userRoutes = require("./routes/user.routes");
 const jobOffersRoutes = require("./routes/jobOffers.routes")

@@ -1,3 +1,4 @@
+//autentificación con google mediante passaport.js
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require('dotenv').config();
