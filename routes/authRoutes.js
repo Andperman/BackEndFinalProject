@@ -7,8 +7,9 @@ const authorizeRole = require('../middlewares/roleMiddleware');
 
 // Controladores
 const { register, login, logout, googleLogin } = require('../controllers/authController');
-const { getProfile, getFavorites } = require('../controllers/userController');
-const { getUsers, createAd, getDashboard } = require('../controllers/adminController'); 
+const { getUsersView } = require('../controllers/views.controller');
+const { getProfile, getFavorites } = require('../controllers/views.controller');
+const { getUsersView ,getDashboard } = require('../controllers/views.controller'); //falta poner funcion crear anuncio
 
 // Rutas de autenticación
 router.get('/register', (req, res) => res.render('register'));  // Registro
@@ -29,9 +30,9 @@ router.get('/profile', authMiddleware, getProfile);              // Perfil de us
 router.get('/favorites', authMiddleware, getFavorites);          // Ofertas favoritas
 
 // Rutas de administrador (requiere autenticación y rol de 'admin')
-router.get('/admin/dashboard', authMiddleware, authorizeRole('admin'), getDashboard); // Dashboard admin
-router.get('/admin/users', authMiddleware, authorizeRole('admin'), getUsers);         // Listado de usuarios
-router.post('/admin/ads', authMiddleware, authorizeRole('admin'), createAd);          // Crear anuncio
+router.get('/admin/dashboard', authMiddleware, authorizeRole('admin'),  getDashboard); // Dashboard admin
+router.get('/admin/users', authMiddleware, authorizeRole('admin'), getUsersView);         // Listado de usuarios
+// router.post('/admin/ads', authMiddleware, authorizeRole('admin'), createAd);          // Crear anuncio
 
 // Ruta de fallo en la autenticación con Google
 router.get('/auth/failure', (req, res) => {    //poner las rutas de fallos
