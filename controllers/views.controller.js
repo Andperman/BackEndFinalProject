@@ -1,3 +1,6 @@
+// importar queries.js
+// importar services
+
 // HOME
 const getHome = (req, res) => {
     try {

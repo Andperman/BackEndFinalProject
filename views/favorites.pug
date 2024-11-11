@@ -6,20 +6,21 @@ html(lang="en")
     header
         if isLogged
             nav
-                label(for="checkboxMenu")
-                    i.fa-solid.fa-bars#openMenu
-                    i.fa-solid.fa-xmark#closeMenu.hidden
-                ul.menu
-                    li: a(href="./profile") Profile
-                    if role === 'admin'
-                        li: a(href='/admin/dashboard') Dashboard
-                    else if role === 'user'
-                        li: a(href='/favorites') Favorites
-                    button#logOut LOGOUT
+              input(type="checkbox" id="checkboxMenu")
+              label(for="checkboxMenu")
+                  i.fa-solid.fa-bars#openMenu
+                  i.fa-solid.fa-xmark#closeMenu.hidden
+              ul.menu
+                  li: a(href="./profile") Profile
+                  if role === 'admin'
+                      li: a(href='/admin/dashboard') Dashboard
+                  else if role === 'user'
+                      li: a(href='/favorites') Favorites
+                  button#logOut LOGOUT
         else
-            div#divUser
-              button#signup Sign Up
-              button#login Log In  
+          div#divUser
+            button#signup Sign Up
+            button#login Log In  
     body  
       section
           article.offerArticle
