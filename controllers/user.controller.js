@@ -70,12 +70,43 @@ const deleteUserByEmail = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 }
-
+const getAllFavoritesFromUserEmail = async (req, res) => {
+    const { email } = req.query;
+    try {
+        const userData = await User.getAllFavoritesFromUserEmail(email);
+        if (userData) {
+            res.status(200).json(userData);
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error obtaining favorites by email:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
+const deleteFavoriteByEmail = async (req, res) => {
+    const { email } = req.query; // {email} le pasaremos el email por el body
+    try {
+        const response = await User.deleteUserByEmail(email);
+        if (response) {
+            res.status(200).json({
+                message: `User: ${email} was deleted successfully`,
+                data: response
+            });
+        } else {
+            res.status(404).json({ error: 'User with that email was not found' });
+        }
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
 module.exports = {
     getAllUsers,
     getUsersByEmail,
     createUser,
     updateUserByEmail,
-    deleteUserByEmail
+    deleteUserByEmail,
+    getAllFavoritesFromUserEmail
 
 }

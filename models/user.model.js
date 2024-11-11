@@ -86,6 +86,23 @@ const deleteUserByEmail = async (userToDelete) => {
     }
     return result;
 };
+// GET BY EMAIL CONTROLLER PARAMS
+const getAllFavoritesFromUserEmail = async (email) => {
+    let client, result;
+    try {
+        client = await pool.connect(); // Espera a abrir conexion
+        const data = await client.query(queries.getAllFavoritesFromUserEmail, [email])
+        result = data.rows
+        
+    } catch (err) {
+        console.log(err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return result
+}
+
 
 
 const Users = {
@@ -93,7 +110,8 @@ const Users = {
     getUsersByEmail,
     createUser,
     updateUserByEmail,
-    deleteUserByEmail
+    deleteUserByEmail,
+    getAllFavoritesFromUserEmail
     
 }
 
