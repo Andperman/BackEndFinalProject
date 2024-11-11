@@ -1,0 +1,467 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Back-End Final Project. Freelance projects app",
+    "description": "This is a full stack developing project consisting in an API to search for and manage job offers and freelance projects. The whole app is built with different technologies such as Node.js, MongoDB, PostgreSQL, SSR with pug dynamic templates",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://renderdeploylink.onrender.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "User Endpoints",
+      "description": "endpoints for user experience and usage of the app",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://github.com/vgarri/BackEndFinalProject"
+      }
+    },
+    {
+      "name": "API",
+      "description": "Access to api endpoints"
+    },
+    {
+      "name": "admin",
+      "description": "Admin operations in the API, prev auth."
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "App homepage view",
+        "operationId": "getHomePage",
+        "responses": {
+          "200": {
+            "description": "Homepage displayed successfully"
+          }
+        }
+      }
+    },
+    "/signup": {
+      "get": {
+        "summary": "User registration view",
+        "operationId": "getSignupPage",
+        "responses": {
+          "200": {
+            "description": "Registration page displayed successfully"
+          }
+        }
+      }
+    },
+    "/login": {
+      "get": {
+        "summary": "User login view",
+        "operationId": "getLoginPage",
+        "responses": {
+          "200": {
+            "description": "Login page displayed successfully"
+          }
+        }
+      }
+    },
+    "/favorites": {
+      "get": {
+        "summary": "User's favorites view",
+        "operationId": "getUserFavorites",
+        "responses": {
+          "200": {
+            "description": "Favorites list displayed successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/profile": {
+      "get": {
+        "summary": "User or admin profile view",
+        "operationId": "getUserProfile",
+        "responses": {
+          "200": {
+            "description": "Profile displayed successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "User list (admin only)",
+        "operationId": "getUsersList",
+        "responses": {
+          "200": {
+            "description": "User list displayed successfully"
+          },
+          "403": {
+            "description": "Access denied"
+          }
+        }
+      }
+    },
+    "/dashboard": {
+      "get": {
+        "summary": "Admin dashboard view for managing ads",
+        "operationId": "getDashboard",
+        "responses": {
+          "200": {
+            "description": "Dashboard displayed successfully"
+          },
+          "403": {
+            "description": "Access denied"
+          }
+        }
+      }
+    },
+    "/api/user": {
+      "post": {
+        "summary": "Register a new user",
+        "operationId": "registerUser",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User successfully registered"
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        }
+      },
+      "put": {
+        "summary": "Edit user or admin profile",
+        "operationId": "editUserProfile",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Profile updated successfully"
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a user (admin only)",
+        "operationId": "deleteUser",
+        "responses": {
+          "204": {
+            "description": "User deleted successfully"
+          },
+          "403": {
+            "description": "Access denied"
+          }
+        }
+      }
+    },
+    "/api/login": {
+      "post": {
+        "summary": "Login to the application",
+        "operationId": "loginUser",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful"
+          },
+          "401": {
+            "description": "Invalid credentials"
+          }
+        }
+      }
+    },
+    "/api/logout": {
+      "post": {
+        "summary": "Logout",
+        "operationId": "logoutUser",
+        "responses": {
+          "200": {
+            "description": "Logout successful"
+          }
+        }
+      }
+    },
+    "/api/ads": {
+      "post": {
+        "summary": "Create a new ad (admin only)",
+        "operationId": "createAd",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "description",
+                  "location",
+                  "type"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Ad created successfully"
+          },
+          "403": {
+            "description": "Access denied"
+          }
+        }
+      },
+      "put": {
+        "summary": "Edit an ad (admin only)",
+        "operationId": "editAd",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ad updated successfully"
+          },
+          "403": {
+            "description": "Access denied"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an ad (admin only)",
+        "operationId": "deleteAd",
+        "responses": {
+          "204": {
+            "description": "Ad deleted successfully"
+          },
+          "403": {
+            "description": "Access denied"
+          }
+        }
+      }
+    },
+    "/api/favorites": {
+      "post": {
+        "summary": "Save an ad to favorites",
+        "operationId": "addFavorite",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ad_id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "ad_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ad saved to favorites successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove an ad from favorites",
+        "operationId": "removeFavorite",
+        "responses": {
+          "200": {
+            "description": "Ad removed from favorites"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/recoverpassword": {
+      "get": {
+        "summary": "Recover password",
+        "operationId": "recoverPassword",
+        "responses": {
+          "200": {
+            "description": "Password recovery form"
+          }
+        }
+      }
+    },
+    "/restorepassword": {
+      "get": {
+        "summary": "Restore password",
+        "operationId": "restorePassword",
+        "responses": {
+          "200": {
+            "description": "Password restoration form"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "jobOffer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 9383276234
+          },
+          "Title": {
+            "type": "string",
+            "example": 198772
+          },
+          "Description": {
+            "type": "integer",
+            "format": "int32",
+            "example": 7
+          },
+          "Date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "url": {
+            "type": "string",
+            "description": "jobOffer link"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 9383276234
+          },
+          "username": {
+            "type": "string",
+            "example": 198772
+          },
+          "password": {
+            "type": "string",
+            "format": "int32",
+            "example": 7
+          },
+          "img": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "role": {
+            "type": "boolean",
+            "description": "user role. Not admin by default"
+          }
+        }
+      }
+    }
+  }
+}
