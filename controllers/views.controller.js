@@ -1,7 +1,10 @@
+// importar queries.js
+// importar services
+
 // HOME
 const getHome = (req, res) => {
     try {
-        let isLogged = false;
+        let isLogged = true;
         let role = 'user';
         scrapping = true;
         // -- FALTA CONSULTAR SQL PARA VER SI ES ADMIN O NO

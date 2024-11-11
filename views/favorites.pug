@@ -1,45 +1,65 @@
 doctype html
 html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    link(rel="stylesheet" href="/css/style.css")
-    script(src="https://kit.fontawesome.com/415eb65d7d.js" crossorigin="anonymous")
-    //- Google Fonts
-    link(rel="preconnect", href="https://fonts.googleapis.com")
-    link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
-    link(href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Poppins:wght@400;500;600;700;800&display=swap", rel="stylesheet")
-
+  include ./head.pug
     title Home
   body
     header
         if isLogged
             nav
-                input(type="checkbox" id="checkboxMenu")
-                label(for="checkboxMenu")
-                    i.fa-solid.fa-bars#openMenu
-                    i.fa-solid.fa-xmark.hidden#closeMenu
-                ul.menu
-                    li: a(href='/') Home
-                    li: a(href='/favorites') Favorites
-                    li: a(href="./profile") Profile     
-                    button#logOut LOGOUT
+              input(type="checkbox" id="checkboxMenu")
+              label(for="checkboxMenu")
+                  i.fa-solid.fa-bars#openMenu
+                  i.fa-solid.fa-xmark#closeMenu.hidden
+              ul.menu
+                  li: a(href="./profile") Profile
+                  if role === 'admin'
+                      li: a(href='/admin/dashboard') Dashboard
+                  else if role === 'user'
+                      li: a(href='/favorites') Favorites
+                  button#logOut LOGOUT
         else
-            div#divUser
-                button#logIn LOGIN
-                button#signUp SIGN UP
-    main
-      form(action="/" method="post")
-        input(name="city" type="text" class="ghost-input" placeholder="Search for job offers!" required)
-        input(type="submit" class="search" value="SEARCH")
+          div#divUser
+            button#signup Sign Up
+            button#login Log In  
+    body  
       section
-          article.homeArticle
-            img(src="" alt="")
-            h2 Oferta de trabajo
-            ul
-              li Description
-              li URL
-              li Date
-            if scrapping
+          article.offerArticle
+            div
+              h2 Oferta de trabajo
+              div.divStars
+                i.fa-solid.fa-star
+                i.fa-regular.fa-star
+            div
+              ul
+                li Description
+                li URL
+                li Date
+              if scrapping
+                button#viewOffer VIEW OFFER
+          article.offerArticle
+            div
+              h2 Oferta de trabajo
+              div.divStars
+                i.fa-solid.fa-star
+                i.fa-regular.fa-star
+            div
+              ul
+                li Description
+                li URL
+                li Date
+              if scrapping
+                button#viewOffer VIEW OFFER
+          article.offerArticle
+            div
+              h2 Oferta de trabajo
+              div.divStars
+                i.fa-solid.fa-star
+                i.fa-regular.fa-star
+            div
+              ul
+                li Description
+                li URL
+                li Date
+              if scrapping
                 button#viewOffer VIEW OFFER
     script(src="/js/script.js")
