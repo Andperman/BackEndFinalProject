@@ -4,7 +4,7 @@
 // HOME
 const getHome = (req, res) => {
     try {
-        let isLogged = true;
+        let isLogged = false;
         let role = 'user';
         scrapping = true;
         // -- FALTA CONSULTAR SQL PARA VER SI ES ADMIN O NO
