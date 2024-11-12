@@ -54,13 +54,18 @@ if (document.querySelector("#popupAddOffer")) {
     };
 }
 
-if (document.querySelector(".fa-heart")) {
-    console.log("HOLA LO EH ENCONTRAO")
-    // closeMenu.addEventListener('click', function () {
-    //     closeMenu.classList.add("hidden");
-    //     openMenu.classList.remove("hidden");
-    // });
-}
+// Ocultar/Desocultar favoritos
+// if (document.querySelector(".offerArticle")) {
+//     console.log("hola")
+//     let heartEmpty = document.getElementsByClassName("heartButton");
+//     let heartFull = document.getElementsByClassName("heartButtonFull");
+//     heartEmpty.addEventListener('click', function () {
+//         heartEmpty.classList.add("hidden");
+//         heartFull.classList.remove("hidden");
+//     });
+// }
+
+
 
 
 // if (document.querySelector("#logOut")) {
@@ -115,7 +120,6 @@ const paintOffers = async (search) => {
 
     // Realizar la solicitud a la API
     const response = await fetch('/api/joboffers');
-
     // Verificar si la respuesta es exitosa
     if (!response.ok) {
         throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
@@ -132,9 +136,6 @@ const paintOffers = async (search) => {
         });
     })
 
-    console.log(data)
-
-    console.log(dataFiltered)
     // Pintar resultados
     let section = document.querySelector("#divResults");
     section.innerHTML = "";
@@ -148,8 +149,8 @@ const paintOffers = async (search) => {
                             <p class="date">${result.date}</p>
                         </div>
                         <div class="divStars">
-                            <i class="fa-solid fa-heart"></i>
-                            <i class="fa-regular fa-heart hidden"></i>
+                            <button class="heartButtonFull hidden"><i class="fa-solid fa-heart"></i></button>
+                            <button class="heartButtonEmpty"><i class="fa-regular fa-heart"></i></button>
                         </div>
                     </div>
                     <div>
@@ -163,4 +164,21 @@ const paintOffers = async (search) => {
             </article>
         `
     })
+    // Interacción con botones de favorito
+    let heartEmptyButtons = document.getElementsByClassName("heartButtonEmpty");
+    let heartFullButtons = document.getElementsByClassName("heartButtonFull");
+
+    for (let i = 0; i < heartEmptyButtons.length; i++) {
+        // Vacío -> Lleno
+        heartEmptyButtons[i].addEventListener('click', () => {
+            heartEmptyButtons[i].classList.add("hidden");
+            heartFullButtons[i].classList.remove("hidden");
+        });
+    
+        // Lleno -> Vacío
+        heartFullButtons[i].addEventListener('click', () => {
+            heartFullButtons[i].classList.add("hidden");
+            heartEmptyButtons[i].classList.remove("hidden");
+        });
+    }
 }
