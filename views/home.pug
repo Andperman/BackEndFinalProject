@@ -51,49 +51,10 @@ html(lang="en")
               input.button(type="submit" value="LOGIN")
     if role !== 'admin'
       section#divFormHome
-        form(action="/" method="post")
+        form(action="/" method="post" id="formResults")
           input(name="search" type="text" placeholder="Search for job offers!" required)
           input(type="submit" class="search" value="SEARCH")
-      section
-          article.offerArticle
-            div
-              h2 Oferta de trabajo
-              div.divStars
-                i.fa-solid.fa-star
-                i.fa-regular.fa-star
-            div
-              ul
-                li Description
-                li URL
-                li Date
-              if scrapping
-                button#viewOffer VIEW OFFER
-          article.offerArticle
-            div
-              h2 Oferta de trabajo
-              div.divStars
-                i.fa-solid.fa-star
-                i.fa-regular.fa-star
-            div
-              ul
-                li Description
-                li URL
-                li Date
-              if scrapping
-                button#viewOffer VIEW OFFER
-          article.offerArticle
-            div
-              h2 Oferta de trabajo
-              div.divStars
-                i.fa-solid.fa-star
-                i.fa-regular.fa-star
-            div
-              ul
-                li Description
-                li URL
-                li Date
-              if scrapping
-                button#viewOffer VIEW OFFER
+      section#divResults
     else
       section#divAdmin 
         a(href='/users').button

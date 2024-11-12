@@ -18,7 +18,6 @@ if (document.querySelector("#openMenu")) {
 
 // ------------------- POP UPS -------------------
 
-
 if (document.querySelector("#popupSignUp")) {
     // Mostrar/Ocultar Sign Up -------
     let popupSignup = document.querySelector('#popupSignUp');
@@ -56,6 +55,8 @@ if (document.querySelector("#popupAddOffer")) {
     };
 }
 
+
+
 // if (document.querySelector("#logOut")) {
 //     // Mostrar/Ocultar Create Job Offer -------
 //     let btnLogOut = document.querySelector('#logOut');
@@ -81,10 +82,21 @@ if (document.querySelector("#popupAddOffer")) {
 //     }
 // };
 
+if (document.querySelector('#formResults')) {
+    let form = document.querySelector('#formResults');
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // PARALIZA EL ENVÍO DEL FORMULARIO
+        let search = event.target.elements.search.value.trim();
+        console.log(search);
+    });
+}
+
+
+
 // PINTAR RESULTADOS DE BÚSQUEDA EN EL DOM
 // Se hace una parte en el front porque hay que acceder al DOM
 const paintOffers = async () => {
-
     // Ejemplo de lo que recibiríamos (borrar):
     let example = [
         {
@@ -102,16 +114,26 @@ const paintOffers = async () => {
     ]
 
     // Pintar resultados
-    let section = document.querySelector("section");
+    let section = document.querySelector("#divResults");
     section.innerHTML = "";
-
     example.forEach(result => {
         section.innerHTML += `
-            <article>
-                <h2>${result.title}</h2>
-                <p>${result.description}</p>
-                <p>${result.date}</p>
-                <a src=${result.url}></a>
+            <article class="offerArticle">
+                <div>
+                    <h2>${result.title}</h2>
+                    <div class="divStars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-regular fa-star"></i>
+                    </div>
+                </div>
+                <div>
+                    <ul>
+                        <li>${result.title}</li>
+                        <li>${result.date}</li>
+                        <li>${result.url}</li>
+                    </ul>
+                    <button id="viewOffer">VIEW OFFER</button>
+                </div>
             </article>
         `
     })
