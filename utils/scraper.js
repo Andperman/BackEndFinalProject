@@ -12,7 +12,7 @@ const extractProductData = async (url, browser) => {
         // productData['title'] = await page.$eval('#projects > div:nth-child(1) > div.project-header > h2 > span > a > span', title => title.innerText);
         // // // productData['description'] = await page.$eval("")
        // Espera a que el selector esté presente
-       productData['name'] = await page.$eval("#productName > h1", name => name.innerHTML.trim().replace(/\n+/g, ' ').replace(/\s+/g, ' '));
+       productData['title'] = await page.$eval("#productName > h1", name => name.innerHTML.trim().replace(/\n+/g, ' ').replace(/\s+/g, ' '));
        productData['description'] = await page.$eval("#app > div > div.container.main > section > section > div > section > article:nth-child(1) > div.expander.js-expander-passed", description => description.innerText.slice(0,200).trim().replace(/\n+/g, ' ').replace(/\s+/g, ' ') + '...');
        productData['data'] = await page.$eval("#productName > p", data => data.innerHTML.trim().replace(/\n+/g, ' ').replace(/\s+/g, ' '));
        productData['url'] = await page.url();

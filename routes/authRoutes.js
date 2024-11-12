@@ -9,7 +9,7 @@ const authorizeRole = require('../middlewares/roleMiddleware');
 const { register, login, logout, googleLogin } = require('../controllers/authController');
 const { getUsersView } = require('../controllers/views.controller');
 const { getProfile, getFavorites } = require('../controllers/views.controller');
-const { getUsersView ,getDashboard } = require('../controllers/views.controller'); //falta poner funcion crear anuncio
+// const { getUsersView ,getDashboard } = require('../controllers/views.controller'); //falta poner funcion crear anuncio
 
 // Rutas de autenticación
 router.get('/register', (req, res) => res.render('register'));  // Registro

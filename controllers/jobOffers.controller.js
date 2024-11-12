@@ -1,5 +1,6 @@
 //const JobOffer = require('../models/jobOffers.model');//interacción con los favoritos?
 const jobOffersService = require('../services/jobOffers.service');
+const scraper = require('../utils/scraper');//funciones de scraping
 
 // CREATE
 const createJobOffer = async (req, res) => {
@@ -66,10 +67,50 @@ const deleteJobOffer = async (req, res) => {
     }
 
 }
+const scrapAndSaveJobOffers = async (req, res) => {
+    try {
+        const { workanaUrl, soyFreelancerUrl } = req.body;
+
+       
+        const workanaAds = await scraper.scrap(workanaUrl); // Scraping de Workana
+        const soyFreelancerAds = await scraper.scrapeFreelancerJobs(soyFreelancerUrl); // Scraping de SoyFreelancer
+
+        // Combinamos los dos arrays 
+        const allAds = [...workanaAds, ...soyFreelancerAds];
+
+        // Guarda cada proyecto en MongoDB
+        const savedOffers = [];
+        for (const data of allAds) {
+            const offerData = {
+                title: data.title,
+                description: data.description,
+                website: data.website || 'http://default-website.com',  // por si no se ejecuta bien he puesto ruta por defecto
+                date: data.date || new Date().toISOString()  // con la fehca igual , que me ponga la fecha actual por defecto
+            };
+            const savedOffer = await jobOffersService.createJobOffer(offerData); 
+            savedOffers.push(savedOffer); // Agrega el proyecto guardado a un array
+        }
+
+        // Responde con los anuncios guardados en MongoDB
+        res.status(201).json({
+            message: "Job offers scrapped and saved successfully",
+            data: savedOffers
+        });
+    } catch (error) {
+        console.error("Error during scraping and saving: ", error);
+        res.status(500).json({
+            message: "Error during scraping and saving",
+            error: error.stack
+        });
+    }
+};
+
 
 module.exports = {
     createJobOffer,
     getAllJobOffers,
     updateJobOffer,
-    deleteJobOffer
+    deleteJobOffer,
+    scrapAndSaveJobOffers
+    
 }
