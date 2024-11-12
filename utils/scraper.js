@@ -14,8 +14,8 @@ const extractProductData = async (url, browser) => {
        // Espera a que el selector esté presente
        productData['title'] = await page.$eval("#productName > h1", name => name.innerHTML.trim().replace(/\n+/g, ' ').replace(/\s+/g, ' '));
        productData['description'] = await page.$eval("#app > div > div.container.main > section > section > div > section > article:nth-child(1) > div.expander.js-expander-passed", description => description.innerText.slice(0,200).trim().replace(/\n+/g, ' ').replace(/\s+/g, ' ') + '...');
-       productData['data'] = await page.$eval("#productName > p", data => data.innerHTML.trim().replace(/\n+/g, ' ').replace(/\s+/g, ' '));
-       productData['url'] = await page.url();
+       productData['date'] = await page.$eval("#productName > p", data => data.innerHTML.trim().replace(/\n+/g, ' ').replace(/\s+/g, ' '));
+       productData['website'] = await page.url();
        
 
        await page.close();
@@ -90,8 +90,8 @@ const getFreelancerJobData = async (url, browser) => {
         // Extraemos los datos de cada trabajo freelance
         jobData['title'] = await page.$eval("#app > div > div > div.flex-fill.mb-2.mb-0.mr-md-4.mt-md-0.p-5 > h1", title => title.innerHTML.trim().replace(/\n+/g, ' ').replace(/\s+/g, ' '));
         jobData['description'] = await page.$eval("#app > div > div > div.flex-fill.mb-2.mb-0.mr-md-4.mt-md-0.p-5 > div.pt-4.pb-4 > div.profile-detail-text", description => description.innerText.slice(0,250).trim().replace(/\n+/g, ' ').replace(/\s+/g, ' ') + '...');
-        jobData['data'] = await page.$eval("#app > div > div > div.flex-fill.mb-2.mb-0.mr-md-4.mt-md-0.p-5 > div:nth-child(5) > div > div:nth-child(1) > div.flex-fill", data => data.innerHTML);
-        jobData['url'] = await page.url();
+        jobData['date'] = await page.$eval("#app > div > div > div.flex-fill.mb-2.mb-0.mr-md-4.mt-md-0.p-5 > div:nth-child(5) > div > div:nth-child(1) > div.flex-fill", data => data.innerHTML);
+        jobData['website'] = await page.url();
        
         await page.close();
 
@@ -142,3 +142,6 @@ const scrapeFreelancerJobs = async (url) => {
 
 // Exportar la funcion de scraping
 exports.scrapeFreelancerJobs = scrapeFreelancerJobs;
+
+
+

@@ -84,8 +84,8 @@ const scrapAndSaveJobOffers = async (req, res) => {
             const offerData = {
                 title: data.title,
                 description: data.description,
-                website: data.website || 'http://default-website.com',  // por si no se ejecuta bien he puesto ruta por defecto
-                date: data.date || new Date().toISOString()  // con la fehca igual , que me ponga la fecha actual por defecto
+                website: data.website ,  
+                date: data.date   
             };
             const savedOffer = await jobOffersService.createJobOffer(offerData); 
             savedOffers.push(savedOffer); // Agrega el proyecto guardado a un array
