@@ -1,6 +1,6 @@
 //const JobOffer = require('../models/jobOffers.model');//interacción con los favoritos?
 const jobOffersService = require('../services/jobOffers.service');
-const { scrap, scrapeFreelancerJobs } = require('../utils/scraper'); //funciones de scraping
+const scraper = require('../utils/scraper');//funciones de scraping
 
 // CREATE
 const createJobOffer = async (req, res) => {
@@ -67,26 +67,35 @@ const deleteJobOffer = async (req, res) => {
     }
 
 }
-
-//Llamamos a scraping, obtenemos los datos y los  guardamos en MongoDB
-const scrapeAllJobOffers = async (req, res) => {
+const scrapAndSaveJobOffers = async (req, res) => {
     try {
-        const url = req.body.url; 
-        const scrapedData = await scrap(url); 
-        // cada proyecto scrappeado lo guarda en MongoDB
+        const { workanaUrl, soyFreelancerUrl } = req.body;
+
+       
+        const workanaAds = await scraper.scrap(workanaUrl); // Scraping de Workana
+        const soyFreelancerAds = await scraper.scrapeFreelancerJobs(soyFreelancerUrl); // Scraping de SoyFreelancer
+
+        // Combina ambos conjuntos de datos en un solo array
+        const allAds = [...workanaAds, ...soyFreelancerAds];
+
+        // Guarda cada anuncio en MongoDB
         const savedOffers = [];
-        for (const data of scrapedData) {
-            const savedOffer = await jobOffersService.createJobOffer(data); // Guarda en la BD
-            savedOffers.push(savedOffer); // Añade el proyecto guardado al array de resultados
+        for (const data of allAds) {
+            const savedOffer = await jobOffersService.createJobOffer(data); 
+            savedOffers.push(savedOffer); // Agrega la oferta guardada a un array
         }
 
+        // Responde con los anuncios guardados en MongoDB
         res.status(201).json({
             message: "Job offers scrapped and saved successfully",
             data: savedOffers
         });
     } catch (error) {
-        console.error(`ERROR: ${error.stack}`);
-        res.status(500).json({ message: "Error during scraping and saving", error: error.stack });
+        console.error("Error during scraping and saving: ", error);
+        res.status(500).json({
+            message: "Error during scraping and saving",
+            error: error.stack
+        });
     }
 };
 
@@ -96,5 +105,6 @@ module.exports = {
     getAllJobOffers,
     updateJobOffer,
     deleteJobOffer,
-    scrapeAllJobOffers
+    scrapAndSaveJobOffers
+    
 }
