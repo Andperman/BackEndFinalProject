@@ -84,12 +84,19 @@ const scrapAndSaveJobOffers = async (req, res) => {
             const offerData = {
                 title: data.title,
                 description: data.description,
-                website: data.website || 'http://default-website.com',  // por si no se ejecuta bien he puesto ruta por defecto
-                date: data.date || new Date().toISOString()  // con la fehca igual , que me ponga la fecha actual por defecto
+                website: data.website ,  
+                date: data.date   
             };
-            const savedOffer = await jobOffersService.createJobOffer(offerData); 
-            savedOffers.push(savedOffer); // Agrega el proyecto guardado a un array
+            
+            // si hay un proyecto co nel mismo título, ya existe en la base de datos
+            const existingOffer = await jobOffersService.getJobOfferByTitle(offerData.title);
+            if (!existingOffer) {
+                // Si no existe, guárdalo 
+                const savedOffer = await jobOffersService.createJobOffer(offerData);
+                savedOffers.push(savedOffer);
+            }
         }
+
 
         // Responde con los anuncios guardados en MongoDB
         res.status(201).json({
