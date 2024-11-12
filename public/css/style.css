@@ -22,6 +22,10 @@ body {
     padding: 0px 10%;
 }
 
+main {
+    padding-bottom: 30px;
+}
+
 header {
     padding: 10px 0px;
 }
@@ -87,12 +91,25 @@ section {
 .offerArticle {
     border-radius: 12px;
     padding: 20px;
-    width: 200px;
+    width: 280px;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .offerArticle button {
     background: var(--black);
+}
+
+.offerArticle > div:first-child > div:first-child > div:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 4px
+}
+
+.date {
+    color: gray;
 }
 
 .profileArticle {
@@ -172,6 +189,10 @@ article>div {
     width: auto;
     height: 100%;
     margin-left: -50px;
+}
+
+.fa-heart {
+    cursor: pointer;
 }
 
 
@@ -320,6 +341,47 @@ h2 {
 }
 
 .popup-content .button {
+    background: var(--black);
+}
+
+.viewOfferButton {
+    display: block;
+    font-size: 14px;
+    width: 115px;
+    height: 25px;
+    background: var(--black);
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: var(--white);
+    font-weight: bold;
+    line-height: 25px;
+    transition: 0.3s;
+    margin-top: 20px;
+}
+
+.viewOfferButton:hover {
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.blackButton {
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--white);
+    background: var(--white-opacity);
+    padding: 9px;
+    border-radius: 8px;
+    border: none;
+    height: 42px;
+    transition: 0.3s;
+}
+
+.blackButton:hover {
+    font-size: 14.5px;
+    cursor: pointer;
     background: var(--black);
 }
 

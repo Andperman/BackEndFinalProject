@@ -49,20 +49,20 @@ html(lang="en")
                   label(for="loginPass") Password:
                   input#loginPass(type="password" name="pass" placeholder="Your password goes here" required)
               input.button(type="submit" value="LOGIN")
-    if role !== 'admin'
-      section#divFormHome
-        form(action="/" method="post" id="formResults")
-          input(name="search" type="text" placeholder="Search for job offers!" required)
-          input(type="submit" class="search" value="SEARCH")
-      section#divResults
-    else
-      section#divAdmin 
-        a(href='/users').button
-          i.fa-solid.fa-users 
-          h2 Users
-        a(href='/dashboard').button
-          i.fa-solid.fa-solar-panel   
-          h2 Dashboard
-          
+      if role !== 'admin'
+        section#divFormHome
+          form(action="/" method="post" id="formResults")
+            input(name="search" type="text" placeholder="Search for job offers!" required)
+            input(type="submit" class="search" value="SEARCH")
+        section#divResults
+      else
+        section#divAdmin 
+          a(href='/users').button
+            i.fa-solid.fa-users 
+            h2 Users
+          a(href='/dashboard').button
+            i.fa-solid.fa-solar-panel   
+            h2 Dashboard
+            
 
   script(src="/js/script.js")
