@@ -35,11 +35,17 @@ const viewsRoutes = require("./routes/views.routes");
 // const routes = require('./routes/getJob.routes'); //añadido andrea
 // const authRoutes = require('./routes/authRoutes');
 
+const favoriteRoutes = require('./routes/favoriteRoutes.js')
+
+
 app.use('/api/user', userRoutes);
 app.use('/api/joboffers', jobOffersRoutes);
 app.use('/', viewsRoutes);
 // app.use(routes); //añadido andrea
 // app.use(authRoutes);
+
+app.use('/api/favorites',favoriteRoutes)
+
 
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));//inicializamos ruta de la documentación
 app.use('*', function(req, res){

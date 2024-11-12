@@ -87,11 +87,11 @@ const deleteUserByEmail = async (userToDelete) => {
     return result;
 };
 // GET BY EMAIL CONTROLLER PARAMS
-const getAllFavoritesFromUserEmail = async (email) => {
+const getAllFavoritesFromUser = async (id) => {
     let client, result;
     try {
         client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.getAllFavoritesFromUserEmail, [email])
+        const data = await client.query(queries.getAllFavoritesFromUser, [id])
         result = data.rows
         
     } catch (err) {
@@ -102,6 +102,36 @@ const getAllFavoritesFromUserEmail = async (email) => {
     }
     return result
 }
+const markAsFavorite = async (favorite) => {
+    const { user_id, mongo_title, mongo_id } = favorite;
+    let client, result;
+    try {
+        client = await pool.connect(); // Espera a abrir conexion
+        const data = await client.query(queries.markAsFavorite,[user_id, mongo_title, mongo_id])
+        result = data.rowCount
+    } catch (err) {
+        console.log(err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return result
+}
+const unmarkAsFavorite = async (favoriteid) => {
+    let client, result;
+    try {
+        client = await pool.connect();
+        const data = await client.query(queries.unmarkAsFavorite, [favoriteid]);
+        result = data.rowCount
+        
+    } catch (err) {
+        console.log('Error unmarking favorite:', err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return result;
+};
 
 
 
@@ -111,7 +141,9 @@ const Users = {
     createUser,
     updateUserByEmail,
     deleteUserByEmail,
-    getAllFavoritesFromUserEmail
+    getAllFavoritesFromUser,
+    markAsFavorite,
+    unmarkAsFavorite
     
 }
 
