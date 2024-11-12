@@ -75,14 +75,20 @@ const scrapAndSaveJobOffers = async (req, res) => {
         const workanaAds = await scraper.scrap(workanaUrl); // Scraping de Workana
         const soyFreelancerAds = await scraper.scrapeFreelancerJobs(soyFreelancerUrl); // Scraping de SoyFreelancer
 
-        // Combina ambos conjuntos de datos en un solo array
+        // Combinamos los dos arrays 
         const allAds = [...workanaAds, ...soyFreelancerAds];
 
-        // Guarda cada anuncio en MongoDB
+        // Guarda cada proyecto en MongoDB
         const savedOffers = [];
         for (const data of allAds) {
-            const savedOffer = await jobOffersService.createJobOffer(data); 
-            savedOffers.push(savedOffer); // Agrega la oferta guardada a un array
+            const offerData = {
+                title: data.title,
+                description: data.description,
+                website: data.website || 'http://default-website.com',  // por si no se ejecuta bien he puesto ruta por defecto
+                date: data.date || new Date().toISOString()  // con la fehca igual , que me ponga la fecha actual por defecto
+            };
+            const savedOffer = await jobOffersService.createJobOffer(offerData); 
+            savedOffers.push(savedOffer); // Agrega el proyecto guardado a un array
         }
 
         // Responde con los anuncios guardados en MongoDB
