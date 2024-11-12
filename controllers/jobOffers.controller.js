@@ -1,5 +1,6 @@
 //const JobOffer = require('../models/jobOffers.model');//interacción con los favoritos?
 const jobOffersService = require('../services/jobOffers.service');
+const { scrap, scrapeFreelancerJobs } = require('../utils/scraper'); //funciones de scraping
 
 // CREATE
 const createJobOffer = async (req, res) => {
@@ -66,6 +67,8 @@ const deleteJobOffer = async (req, res) => {
     }
 
 }
+
+
 
 module.exports = {
     createJobOffer,
