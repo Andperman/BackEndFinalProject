@@ -90,7 +90,7 @@ const getFreelancerJobData = async (url, browser) => {
         // Extraemos los datos de cada trabajo freelance
         jobData['title'] = await page.$eval("#app > div > div > div.flex-fill.mb-2.mb-0.mr-md-4.mt-md-0.p-5 > h1", title => title.innerHTML.trim().replace(/\n+/g, ' ').replace(/\s+/g, ' '));
         jobData['description'] = await page.$eval("#app > div > div > div.flex-fill.mb-2.mb-0.mr-md-4.mt-md-0.p-5 > div.pt-4.pb-4 > div.profile-detail-text", description => description.innerText.slice(0,250).trim().replace(/\n+/g, ' ').replace(/\s+/g, ' ') + '...');
-        jobData['date'] = await page.$eval("#app > div > div > div.flex-fill.mb-2.mb-0.mr-md-4.mt-md-0.p-5 > div:nth-child(5) > div > div:nth-child(1) > div.flex-fill", data => data.innerHTML);
+        jobData['date'] = await page.$eval("#app > div > div > div.flex-fill.mb-2.mb-0.mr-md-4.mt-md-0.p-5 > div:nth-child(5) > div > div:nth-child(2) > div.flex-fill", data => data.innerHTML);
         jobData['website'] = await page.url();
        
         await page.close();

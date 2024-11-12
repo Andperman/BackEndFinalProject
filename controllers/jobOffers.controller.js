@@ -87,9 +87,16 @@ const scrapAndSaveJobOffers = async (req, res) => {
                 website: data.website ,  
                 date: data.date   
             };
-            const savedOffer = await jobOffersService.createJobOffer(offerData); 
-            savedOffers.push(savedOffer); // Agrega el proyecto guardado a un array
+            
+            // Revisa si un anuncio con el mismo título ya existe en la base de datos
+            const existingOffer = await jobOffersService.getJobOfferByTitle(offerData.title);
+            if (!existingOffer) {
+                // Si no existe, guárdalo en la base de datos
+                const savedOffer = await jobOffersService.createJobOffer(offerData);
+                savedOffers.push(savedOffer);
+            }
         }
+
 
         // Responde con los anuncios guardados en MongoDB
         res.status(201).json({

@@ -7,6 +7,10 @@ const getAllJobOffers = async (id) => {
 
 };
 
+const getJobOfferByTitle = async (title) => {
+    return await JobOffer.findOne({ title });
+};
+
 const getJobOfferById = async (id) => {
     return await JobOffer.findById(id);
 };
@@ -27,6 +31,7 @@ const deleteJobOffer = async (id) => {
 
 module.exports = {
     getAllJobOffers,
+    getJobOfferByTitle,
     getJobOfferById,
     createJobOffer,
     editJobOffer,
