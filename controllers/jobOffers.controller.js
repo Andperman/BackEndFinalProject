@@ -88,10 +88,10 @@ const scrapAndSaveJobOffers = async (req, res) => {
                 date: data.date   
             };
             
-            // Revisa si un anuncio con el mismo título ya existe en la base de datos
+            // si hay un proyecto co nel mismo título, ya existe en la base de datos
             const existingOffer = await jobOffersService.getJobOfferByTitle(offerData.title);
             if (!existingOffer) {
-                // Si no existe, guárdalo en la base de datos
+                // Si no existe, guárdalo 
                 const savedOffer = await jobOffersService.createJobOffer(offerData);
                 savedOffers.push(savedOffer);
             }
