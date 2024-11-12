@@ -68,11 +68,33 @@ const deleteJobOffer = async (req, res) => {
 
 }
 
+//Llamamos a scraping, obtenemos los datos y los  guardamos en MongoDB
+const scrapeAllJobOffers = async (req, res) => {
+    try {
+        const url = req.body.url; 
+        const scrapedData = await scrap(url); 
+        // cada proyecto scrappeado lo guarda en MongoDB
+        const savedOffers = [];
+        for (const data of scrapedData) {
+            const savedOffer = await jobOffersService.createJobOffer(data); // Guarda en la BD
+            savedOffers.push(savedOffer); // Añade el proyecto guardado al array de resultados
+        }
+
+        res.status(201).json({
+            message: "Job offers scrapped and saved successfully",
+            data: savedOffers
+        });
+    } catch (error) {
+        console.error(`ERROR: ${error.stack}`);
+        res.status(500).json({ message: "Error during scraping and saving", error: error.stack });
+    }
+};
 
 
 module.exports = {
     createJobOffer,
     getAllJobOffers,
     updateJobOffer,
-    deleteJobOffer
+    deleteJobOffer,
+    scrapeAllJobOffers
 }
