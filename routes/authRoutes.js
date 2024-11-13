@@ -23,7 +23,7 @@ router.get('/logout', logout);                                   // Logout usuar
 router.get('/google', passport.authenticate('google', { scope: ['email', 'profile'], prompt: 'select_account' }));
 router.get('/google/callback',
     passport.authenticate('google', { failureRedirect: '/auth/failure' }),
-    googleLogin // Si todo va bien, lo dirigimos al dashboard
+    googleLogin 
 );
 
 // Rutas de usuario (requiere autenticación)

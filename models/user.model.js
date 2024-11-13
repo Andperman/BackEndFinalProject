@@ -1,6 +1,6 @@
 const pool = require('../config/db_pgSQL')
 const queries = require('../utils/queries.js') // Queries SQL
-// const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 //falta favoritos
 
 
@@ -41,10 +41,13 @@ const getUsersByEmail = async (email) => {
 const createUser = async (user) => {
     const { username, email, password, img } = user;
     let client, result;
+
+    // Si el username es null o undefined, asigna uno por defecto
+    const finalUsername = username ? username : email.split('@')[0]; // Usamos el correo sin el dominio como username si no se pasa uno
     try {
         client = await pool.connect(); // Espera a abrir conexion
-        // const hashedPassword = await bcrypt.hash(password, 10);
-        const data = await client.query(queries.createUser,[username, email, hashedPassword, img])
+        const hashedPassword = password ? await bcrypt.hash(password, 10) : null; // Si hay contraseña, la hasheamos
+        const data = await client.query(queries.createUser,[finalUsername, email, hashedPassword, img])
         result = data.rowCount
     } catch (err) {
         console.log(err);
@@ -61,7 +64,7 @@ const updateUserByEmail = async (updatedUser, currentEmail) => {
     let client, result;
     try {
         client = await pool.connect();
-        // const hashedPassword = await bcrypt.hash(password, 10); 
+        const hashedPassword = password ? await bcrypt.hash(password, 10) : null; // Si hay contraseña, la hasheamos
         const data = await client.query(queries.updateUserByEmail, [name, email, hashedPassword, img, currentEmail]);
         result = data.rows; // Devuelve la fila actualizada
     } catch (err) {
