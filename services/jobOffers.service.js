@@ -2,8 +2,8 @@ const JobOffer = require('../models/jobOffers.model')
 
 const getAllJobOffers = async (id) => {
             return id
-            ? await JobOffer.find({id},'-__v').populate('provider', '-_id -__v') 
-            : await JobOffer.find({},'-__v').populate(); //{}
+            ? await JobOffer.find({id},'-__v')
+            : await JobOffer.find({},'-__v'); //{}
 
 };
 
