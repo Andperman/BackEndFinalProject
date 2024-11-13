@@ -93,6 +93,7 @@ if (document.querySelector("#popupAddOffer")) {
 //     }
 // };
 
+// FORMULARIO DE BÚSQUEDA
 if (document.querySelector('#formResults')) {
     let form = document.querySelector('#formResults');
 
@@ -102,19 +103,28 @@ if (document.querySelector('#formResults')) {
         paintOffers(search);
     });
 }
+// OFERTAS EN DASHBOARD
 
-if (document.querySelector('#formResults')) {
-    let form = document.querySelector('#formResults');
+if (document.querySelector('#divDashboard')) {
+    let section = document.querySelector('#divDashboard');
 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault(); // PARALIZA EL ENVÍO DEL FORMULARIO
-        let search = event.target.elements.search.value.trim();
-        paintOffers(search);
-    });
+    section.innerHTML = `
+    
+    `
+
+    // article.homeArticle
+    //                 h2 Oferta de trabajo
+    //                 ul
+    //                     li Description
+    //                     li URL
+    //                     li Date
+    //                 if scrapping
+    //                     button
 }
 
 let favoritesUser;
 
+// OBTENER FAVORITOS DE UN USUARIO CONCRETO
 const getFavorites = async () => {
     // -- Fetch a SQL para obtener ID del User
 
@@ -126,8 +136,8 @@ const getFavorites = async () => {
     return favoritesUser;
 }
 
+// HOME
 // PINTAR RESULTADOS DE BÚSQUEDA EN EL DOM
-// Se hace una parte en el front porque hay que acceder al DOM
 const paintOffers = async (search) => {
     await getFavorites()
 
@@ -247,4 +257,45 @@ const paintOffers = async (search) => {
             heartEmptyButtons[i].classList.remove("hidden");
         });
     }
+}
+
+// DASHBOARD
+// PINTAR OFERTAS CREADAS POR EL ADMIN
+const paintOffersInDashboard = async () => {
+    // PINTAR OFERTAS DE MONGODB
+    // Realizar la solicitud a la API
+    const responseMongo = await fetch('/api/joboffers');
+    // Verificar si la respuesta es exitosa
+    if (!responseMongo.ok) {
+        throw new Error(`Error HTTP: ${responseMongo.status} - ${responseMongo.statusText}`);
+    }
+    const dataMongo = await responseMongo.json();
+    // Iteramos el array y bsucamos los que no tengan URL
+    let dataFiltered = dataMongo.filter(offer => !offer.website);
+    console.log(dataFiltered)
+    // Pintar resultados
+    let section = document.querySelector("#divDashboard");
+    section.innerHTML = "";
+    dataFiltered.forEach(result => {
+        section.innerHTML += `
+            <article class="offerArticle">
+                <div>
+                    <div>
+                        <div>
+                            <h2 id=${result._id}>${result.title}</h2>
+                            <p class="date">${result.date}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p>${result.description}</p>
+                    </div>
+                </div>                
+            </article>
+        `
+    })
+}
+
+// Si estamos en el dashboard, pintar ofertas del admin
+if (document.querySelector("#divDashboard")) {
+    paintOffersInDashboard();
 }
