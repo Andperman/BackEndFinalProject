@@ -1,5 +1,6 @@
 const pool = require('../config/db_pgSQL')
 const queries = require('../utils/queries.js') // Queries SQL
+// const bcrypt = require('bcryptjs');
 //falta favoritos
 
 
@@ -42,7 +43,8 @@ const createUser = async (user) => {
     let client, result;
     try {
         client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.createUser,[username, email, password, img])
+        // const hashedPassword = await bcrypt.hash(password, 10);
+        const data = await client.query(queries.createUser,[username, email, hashedPassword, img])
         result = data.rowCount
     } catch (err) {
         console.log(err);
@@ -59,7 +61,8 @@ const updateUserByEmail = async (updatedUser, currentEmail) => {
     let client, result;
     try {
         client = await pool.connect();
-        const data = await client.query(queries.updateUserByEmail, [name, email, password, img, currentEmail]);
+        // const hashedPassword = await bcrypt.hash(password, 10); 
+        const data = await client.query(queries.updateUserByEmail, [name, email, hashedPassword, img, currentEmail]);
         result = data.rows; // Devuelve la fila actualizada
     } catch (err) {
         console.log('Error updating user:', err);

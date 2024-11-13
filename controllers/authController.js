@@ -1,16 +1,17 @@
 //funciones donde gestionamos la autentificación y autorización de los usuarios
 // Importamos la función que busca usuarios por email
-const { createUser, getUsersByEmail } = require('../models/user2.model');// interactuar con la base de datos
+const { createUser, getUsersByEmail } = require('../models/user.model');// interactuar con la base de datos
 const jwt = require('jsonwebtoken');  // JWT generar tokens
 const bcrypt = require('bcryptjs');  // Bcrypt para cifrar contraseñas
 
 // Registro de usuario
 //Creamos un nuevo usuario en la base de datos, encriptando su contraseña con bcryptjs antes de guardarla.
 async function register(req, res) {
-    const { username, password, email, role = 'user' } = req.body; // role se establece por defecto como 'user'
+    const { username, password, email,img , role = 'user' } = req.body; // role se establece por defecto como 'user'
+    // console.log('Password recibido:', password);
     try {
         // Crear nuevo usuario en la base de datos
-        const newUser = await createUser(username, password, email, role);
+        const newUser = await createUser(username, password, email,img, role);
         res.redirect('/login');  // Redireccionar al login si todo sale bien 
     } catch (error) {
         res.status(500).send('Error en el registro'); 
@@ -48,16 +49,15 @@ async function login(req, res) {
     }
 }
 
-// Cierre de sesión
+// LOGOUT
 function logout(req, res) {
     // Elimina la cookie del token
     res.clearCookie('token');
     res.redirect('/login');  // Redireccionar al login después del logout
 }
 
+
 // Login con Google 
-
-
 async function googleLogin(req, res) {
     try {
         const { id, displayName, emails } = req.user;  // Los datos del usuario de Google
@@ -89,7 +89,7 @@ async function googleLogin(req, res) {
         });
 
         // Redirigir al dashboard
-        res.redirect('/dashboard');
+        res.redirect('/');
     } catch (error) {
         console.error(error);
         res.status(500).send('Error en la autenticación con Google');
