@@ -79,6 +79,13 @@ const getFavorites = async () => {
 
     return favoritesUser;
 }
+// OBTENER TODOS LOS USUARIOS
+const getAllUsers = async () => {
+    let responseSQL = await fetch('/api/user/');
+    allUsers = await responseSQL.json();
+    return allUsers;
+}
+
 
 // PINTAR SÓLO FAVORIOS DE UN USUARIO CONCRETO
 const paintFavorites = async () => {
@@ -265,6 +272,36 @@ const paintOffers = async (search) => {
     }
 }
 
+// PINTAR TODOS LOS USUARIOS
+const paintAllUsers = async () => {
+    let users = await getAllUsers();
+    console.log(users)
+    // Pintar resultados
+    let section = document.querySelector("#divAllUsers");
+    section.innerHTML = "";
+    users.forEach(user => {
+        section.innerHTML += `
+            <article class="usersArticle">
+                <div id="divImg">
+                    <img src="../assets/img_prueba.jpg" alt="">
+                </div>
+                <div>
+                    <h2>${user.username}</h2>
+                    <ul>
+                        <li>${user.email}</li>
+                        <li>*********</li>
+                    </ul>
+                    <div>
+                        <button id="editUser"><i class="fa-solid fa-pen"></i></button>
+                        <button id="eraseUser"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+            </article>
+        `
+    })
+}
+
+
 // DASHBOARD
 // PINTAR OFERTAS CREADAS POR EL ADMIN
 const paintOffersInDashboard = async () => {
@@ -308,4 +345,9 @@ if (document.querySelector("#divDashboard")) {
 // Si estamos en los favoritos, pintar los favoritos del usuario
 if (document.querySelector("#divFavorites")) {
     paintFavorites();
+}
+
+// Si estamos viendo todos los users, pintar los users
+if (document.querySelector("#divAllUsers")) {
+    paintAllUsers();
 }
