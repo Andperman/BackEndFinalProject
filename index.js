@@ -1,5 +1,5 @@
 const express = require('express') //importamos paquete express
-// const swaggerUi = require('swagger-ui-express');//documentacion de la app
+const swaggerUi = require('swagger-ui-express');//documentacion de la app
 const swaggerDocument = require('./swagger.json');
 const app = express() // inicializar servidor con express
 const port = 3000;
@@ -47,7 +47,7 @@ app.use('/', viewsRoutes);
 app.use('/api/favorites',favoriteRoutes)
 
 
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));//inicializamos ruta de la documentación
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));//inicializamos ruta de la documentación
 app.use('*', function(req, res){
     res.status(404).render('error', { statusCode: 400 })
 });
