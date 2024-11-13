@@ -14,7 +14,6 @@ if (document.querySelector("#openMenu")) {
     });
 }
 
-
 // ------------------- POP UPS -------------------
 
 if (document.querySelector("#popupSignUp")) {
@@ -54,46 +53,7 @@ if (document.querySelector("#popupAddOffer")) {
     };
 }
 
-// Ocultar/Desocultar favoritos
-// if (document.querySelector(".offerArticle")) {
-//     console.log("hola")
-//     let heartEmpty = document.getElementsByClassName("heartButton");
-//     let heartFull = document.getElementsByClassName("heartButtonFull");
-//     heartEmpty.addEventListener('click', function () {
-//         heartEmpty.classList.add("hidden");
-//         heartFull.classList.remove("hidden");
-//     });
-// }
-
-
-
-
-// if (document.querySelector("#logOut")) {
-//     // Mostrar/Ocultar Create Job Offer -------
-//     let btnLogOut = document.querySelector('#logOut');
-
-//     btnLogOut.onclick = function () {
-//         popupAddOffer.style.display = 'block';
-//     };
-
-// }
-
-
-
-// // Cerrar popup si se hace click fuera -------
-// window.onclick = function (event) {
-//     if (event.target == popupSignup) {
-//         popupSignup.style.display = 'none';
-//     }
-//     if (event.target == popupLogin) {
-//         popupLogin.style.display = 'none';
-//     }
-//     if (event.target == popupAddOffer) {
-//         popupAddOffer.style.display = 'none';
-//     }
-// };
-
-// FORMULARIO DE BÚSQUEDA
+// FORMULARIO DE BÚSQUEDA -> PINTAR OFERTAS
 if (document.querySelector('#formResults')) {
     let form = document.querySelector('#formResults');
 
@@ -103,29 +63,13 @@ if (document.querySelector('#formResults')) {
         paintOffers(search);
     });
 }
-// OFERTAS EN DASHBOARD
 
-if (document.querySelector('#divDashboard')) {
-    let section = document.querySelector('#divDashboard');
-
-    section.innerHTML = `
-    
-    `
-
-    // article.homeArticle
-    //                 h2 Oferta de trabajo
-    //                 ul
-    //                     li Description
-    //                     li URL
-    //                     li Date
-    //                 if scrapping
-    //                     button
-}
-
+// Variable global que declaramos porque la comprobará en distintas funciones
 let favoritesUser;
 
 // OBTENER FAVORITOS DE UN USUARIO CONCRETO
 const getFavorites = async () => {
+    // Comprobar email en la cookie
     // -- Fetch a SQL para obtener ID del User
 
     // OBTENER FAVORITOS DEL USUARIO
@@ -151,7 +95,7 @@ const paintFavorites = async () => {
     const dataMongo = await responseMongo.json();
 
     // Iteramos el array de palabras de búsqueda
-    const favorites = dataMongo.filter(offer => 
+    const favorites = dataMongo.filter(offer =>
         favoritesUser.some(favorite => favorite.mongo_id === offer._id)
     );
 
@@ -160,6 +104,8 @@ const paintFavorites = async () => {
     let section = document.querySelector("#divFavorites");
     section.innerHTML = "";
     favorites.forEach(result => {
+        //Comprobamos si la oferta está en los favoritos del user
+        const isFavorite = favoritesUser.some(favorite => favorite.mongo_id === result._id);
         section.innerHTML += `
             <article class="offerArticle">
                 <div>
@@ -169,8 +115,12 @@ const paintFavorites = async () => {
                             <p class="date">${result.date}</p>
                         </div>
                         <div class="divStars">
-                            <button class="heartButtonFull hidden" id="${result._id}"><i class="fa-solid fa-heart"></i></button>
-                            <button class="heartButtonEmpty" id="${result._id}"><i class="fa-regular fa-heart"></i></button>
+                            <button class="heartButtonFull ${isFavorite ? '' : 'hidden'}" id="${result._id}">
+                                <i class="fa-solid fa-heart"></i>
+                            </button>
+                            <button class="heartButtonEmpty ${isFavorite ? 'hidden' : ''}" id="${result._id}">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
                         </div>
                     </div>
                     <div>
@@ -183,8 +133,59 @@ const paintFavorites = async () => {
                 
             </article>
         `
+        // Interacción con botones de favorito
+        const heartEmptyButtons = document.getElementsByClassName("heartButtonEmpty");
+        const heartFullButtons = document.getElementsByClassName("heartButtonFull");
+
+        // Agregar listeners para cada botón de favorito
+        for (let i = 0; i < heartEmptyButtons.length; i++) {
+            heartEmptyButtons[i].addEventListener('click', () => {
+                toggleFavorite(heartEmptyButtons[i].getAttribute('id'), false);
+                heartEmptyButtons[i].classList.add("hidden");
+                heartFullButtons[i].classList.remove("hidden");
+            });
+        }
+
+        for (let i = 0; i < heartFullButtons.length; i++) {
+            heartFullButtons[i].addEventListener('click', () => {
+                toggleFavorite(heartFullButtons[i].getAttribute('id'), true);
+                heartFullButtons[i].classList.add("hidden");
+                heartEmptyButtons[i].classList.remove("hidden");
+            });
+        }
     })
 }
+
+// MARCAR/DESMARCAR FAVORITO
+const toggleFavorite = async (idMongo, isFavorite) => {
+    let titleMongo = document.getElementById(`${idMongo}`).innerHTML;
+
+    if (!isFavorite) {
+        // Añadir favorito
+        await fetch('/api/favorites', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                user_id: 1,
+                mongo_title: titleMongo,
+                mongo_id: idMongo
+            })
+        });
+        getFavorites();
+    } else {
+        // Eliminar favorito
+        let favoriteToDelete = favoritesUser.find(favorite => favorite.mongo_id === idMongo);
+        if (favoriteToDelete) {
+            await fetch(`/api/favorites/${favoriteToDelete.favorite_id}`, { method: "DELETE" });
+        }
+        getFavorites();
+    }
+
+    // Refrescar lista de favoritos
+    await getFavorites();
+};
 
 // HOME
 // PINTAR RESULTADOS DE BÚSQUEDA EN EL DOM
@@ -213,6 +214,8 @@ const paintOffers = async (search) => {
     let section = document.querySelector("#divResults");
     section.innerHTML = "";
     dataFiltered.forEach(result => {
+        //Comprobamos si la oferta está en los favoritos del user
+        const isFavorite = favoritesUser.some(favorite => favorite.mongo_id === result._id);
         section.innerHTML += `
             <article class="offerArticle">
                 <div>
@@ -222,8 +225,12 @@ const paintOffers = async (search) => {
                             <p class="date">${result.date}</p>
                         </div>
                         <div class="divStars">
-                            <button class="heartButtonFull hidden" id="${result._id}"><i class="fa-solid fa-heart"></i></button>
-                            <button class="heartButtonEmpty" id="${result._id}"><i class="fa-regular fa-heart"></i></button>
+                            <button class="heartButtonFull ${isFavorite ? '' : 'hidden'}" id="${result._id}">
+                                <i class="fa-solid fa-heart"></i>
+                            </button>
+                            <button class="heartButtonEmpty ${isFavorite ? 'hidden' : ''}" id="${result._id}">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
                         </div>
                     </div>
                     <div>
@@ -238,71 +245,20 @@ const paintOffers = async (search) => {
         `
     })
     // Interacción con botones de favorito
-    let heartEmptyButtons = document.getElementsByClassName("heartButtonEmpty");
-    let heartFullButtons = document.getElementsByClassName("heartButtonFull");
+    const heartEmptyButtons = document.getElementsByClassName("heartButtonEmpty");
+    const heartFullButtons = document.getElementsByClassName("heartButtonFull");
 
-    // CREAR FAVORITO
     for (let i = 0; i < heartEmptyButtons.length; i++) {
-        // Vacío -> Lleno
-        heartEmptyButtons[i].addEventListener('click', async () => {
+        heartEmptyButtons[i].addEventListener('click', () => {
+            toggleFavorite(heartEmptyButtons[i].getAttribute('id'), false);
             heartEmptyButtons[i].classList.add("hidden");
             heartFullButtons[i].classList.remove("hidden");
-            // Sacar el ID de mongo de ese elemento
-            let idMongo = heartEmptyButtons[i].getAttribute('id');
-            // Sacar el título de Mongo
-            let h2 = document.getElementById(`${idMongo}`);
-            let titleMongo = h2.innerHTML;
-            // Coger datos cookie
-
-            await fetch('/api/favorites', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    user_id: 1,
-                    mongo_title: `${titleMongo}`,
-                    mongo_id: `${idMongo}`
-                })
-            })
-            //Refrescar favoritos
-            await getFavorites();
-        });
-
-        // Lleno -> Vacío
-        heartFullButtons[i].addEventListener('click', async () => {
-            heartFullButtons[i].classList.add("hidden");
-            heartEmptyButtons[i].classList.remove("hidden");
         });
     }
-    // BORRAR FAVORITO
+
     for (let i = 0; i < heartFullButtons.length; i++) {
-        // Vacío -> Lleno
-        heartFullButtons[i].addEventListener('click', async () => {
-            heartFullButtons[i].classList.add("hidden");
-            heartEmptyButtons[i].classList.remove("hidden");
-            // Cogemos el ID de mongo del botón en el que estemos
-            let idMongo = heartFullButtons[i].getAttribute('id');
-            console.log("ID de Mongo (string) : " + idMongo)
-            // Recorrer array de favoritos del user y buscar el que coincida con idMongo
-            let favoriteToDelete = favoritesUser.filter(favorite => favorite.mongo_id === idMongo);
-            console.log(favoriteToDelete)
-            let idFavoriteNum = favoriteToDelete[0].favorite_id;
-            console.log(typeof idFavoriteNum);
-            console.log(idFavoriteNum)
-            let idFavoriteString = idFavoriteNum.toString()
-            console.log("Favorito para borrar:" + idFavoriteString)
-            // let favoritesFromUser = await fetch('/api/favorites/1')
-            // let favoritesUser = await responseSQL.json();
-
-            // Coger datos cookie
-            // Fetch a Api para borrar favorito de ese usuario
-            await fetch(`/api/favorites/${idFavoriteNum}`, { method: "DELETE" })
-            // await fetch(`/api/favorites/15`, {method: "DELETE"})
-        });
-
-        // Lleno -> Vacío
-        heartFullButtons[i].addEventListener('click', async () => {
+        heartFullButtons[i].addEventListener('click', () => {
+            toggleFavorite(heartFullButtons[i].getAttribute('id'), true);
             heartFullButtons[i].classList.add("hidden");
             heartEmptyButtons[i].classList.remove("hidden");
         });
@@ -320,8 +276,8 @@ const paintOffersInDashboard = async () => {
         throw new Error(`Error HTTP: ${responseMongo.status} - ${responseMongo.statusText}`);
     }
     const dataMongo = await responseMongo.json();
-    // Iteramos el array y bsucamos los que no tengan URL
-    let dataFiltered = dataMongo.filter(offer => !offer.website);
+    // Iteramos el array y bsucamos los que estén hechas por el admin
+    let dataFiltered = dataMongo.filter(offer => offer.createdBy === "admin");
     console.log(dataFiltered)
     // Pintar resultados
     let section = document.querySelector("#divDashboard");
@@ -349,7 +305,7 @@ const paintOffersInDashboard = async () => {
 if (document.querySelector("#divDashboard")) {
     paintOffersInDashboard();
 }
-
+// Si estamos en los favoritos, pintar los favoritos del usuario
 if (document.querySelector("#divFavorites")) {
     paintFavorites();
 }
