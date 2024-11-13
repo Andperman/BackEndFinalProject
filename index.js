@@ -8,7 +8,7 @@ const passport = require("passport");
 const session = require("express-session");
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
-require("./utils/auth.js");
+require("./utils/auth.js"); //importamos auth de google
 
 dotenv.config();
 //Logger
@@ -32,8 +32,8 @@ app.use(passport.session());
 const userRoutes = require("./routes/user.routes");
 const jobOffersRoutes = require("./routes/jobOffers.routes")
 const viewsRoutes = require("./routes/views.routes");
-// const routes = require('./routes/getJob.routes'); //añadido andrea
-// const authRoutes = require('./routes/authRoutes');
+const routes = require('./routes/getJob.routes'); //añadido andrea
+const authRoutes = require('./routes/authRoutes');
 
 const favoriteRoutes = require('./routes/favoriteRoutes.js')
 
@@ -41,8 +41,8 @@ const favoriteRoutes = require('./routes/favoriteRoutes.js')
 app.use('/api/user', userRoutes);
 app.use('/api/joboffers', jobOffersRoutes);
 app.use('/', viewsRoutes);
-// app.use(routes); //añadido andrea
-// app.use(authRoutes);
+app.use(routes); //añadido andrea
+app.use(authRoutes);
 
 app.use('/api/favorites',favoriteRoutes)
 
