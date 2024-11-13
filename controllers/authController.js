@@ -57,17 +57,19 @@ function logout(req, res) {
 }
 
 
-// Login con Google 
 async function googleLogin(req, res) {
     try {
         const { id, displayName, emails } = req.user;  // Los datos del usuario de Google
+
+        // Si displayName no hay, utiliza el correo electrónico
+        const username = displayName || emails[0].value.split('@')[0]; // Usa displayName, si no existe usa el correo sin el dominio
 
         // Verificar si el usuario ya existe en la base de datos por su email
         let users = await getUsersByEmail(emails[0].value);  // Buscar el usuario por su correo electrónico
 
         if (users.length === 0) {
             // Si no existe, creamos uno nuevo
-            const newUser = await createUser(displayName, 'default_password', emails[0].value, 'user');
+            const newUser = await createUser({ username, email: emails[0].value, password: 'default_password', img: 'user' });
             users = [newUser];  
         }
 
@@ -95,6 +97,7 @@ async function googleLogin(req, res) {
         res.status(500).send('Error en la autenticación con Google');
     }
 }
+
 
 
 module.exports = { register, login, logout, googleLogin };
