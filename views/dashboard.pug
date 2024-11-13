@@ -35,6 +35,9 @@ html(lang="en")
                         div
                             label(for="description") Description:
                             input(type="text" name="description" placeholder="Description" required)
+                        div
+                            label(for="website") Website:
+                            input(type="text" name="website" placeholder="Website" required)
                         //- PONER AQUÍ LOS DOCUMENTOS DE MONGODB
                         input.button(type="submit" value="CREATE JOB OFFER")
                         .warningDiv
@@ -85,3 +88,4 @@ html(lang="en")
                     if scrapping
                         button
         script(src="/js/script.js")
+        script(src="/js/adminScript.js")

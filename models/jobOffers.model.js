@@ -17,7 +17,7 @@ const objectSchema = {
     },
     website: {
         type: String,
-        required: true,
+        required: false,
         validate: {
             validator: function (url) {
                 if (url.indexOf('http') != -1)
@@ -33,6 +33,10 @@ const objectSchema = {
         type: String,
         required: true
 
+    },
+    createdBy: {
+        type: String,
+        required: false
     }
 
 }
