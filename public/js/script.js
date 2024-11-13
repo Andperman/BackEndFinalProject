@@ -132,8 +132,58 @@ const getFavorites = async () => {
     // Fetch a SQL para obtener los favoritos del User
     let responseSQL = await fetch('/api/favorites/1')
     favoritesUser = await responseSQL.json();
-    console.log(favoritesUser);
+
     return favoritesUser;
+}
+
+// PINTAR SÓLO FAVORIOS DE UN USUARIO CONCRETO
+const paintFavorites = async () => {
+    // Obtener lista de favoritos del usuario
+    let favoritesUser = await getFavorites();
+    console.log(favoritesUser)
+
+    // Obtener lista de ofertas de Mongo
+    const responseMongo = await fetch('/api/joboffers');
+    // Verificar si la respuesta es exitosa
+    if (!responseMongo.ok) {
+        throw new Error(`Error HTTP: ${responseMongo.status} - ${responseMongo.statusText}`);
+    }
+    const dataMongo = await responseMongo.json();
+
+    // Iteramos el array de palabras de búsqueda
+    const favorites = dataMongo.filter(offer => 
+        favoritesUser.some(favorite => favorite.mongo_id === offer._id)
+    );
+
+
+    // Pintar resultados
+    let section = document.querySelector("#divFavorites");
+    section.innerHTML = "";
+    favorites.forEach(result => {
+        section.innerHTML += `
+            <article class="offerArticle">
+                <div>
+                    <div>
+                        <div>
+                            <h2 id=${result._id}>${result.title}</h2>
+                            <p class="date">${result.date}</p>
+                        </div>
+                        <div class="divStars">
+                            <button class="heartButtonFull hidden" id="${result._id}"><i class="fa-solid fa-heart"></i></button>
+                            <button class="heartButtonEmpty" id="${result._id}"><i class="fa-regular fa-heart"></i></button>
+                        </div>
+                    </div>
+                    <div>
+                        <p>${result.description}</p>
+                    </div>
+                </div>
+                <div>
+                    <a href="${result.website}" class=viewOfferButton>VIEW OFFER</a>
+                </div>
+                
+            </article>
+        `
+    })
 }
 
 // HOME
@@ -298,4 +348,8 @@ const paintOffersInDashboard = async () => {
 // Si estamos en el dashboard, pintar ofertas del admin
 if (document.querySelector("#divDashboard")) {
     paintOffersInDashboard();
+}
+
+if (document.querySelector("#divFavorites")) {
+    paintFavorites();
 }
