@@ -113,25 +113,38 @@ if (document.querySelector('#formResults')) {
     });
 }
 
+let favoritesUser;
+
+const getFavorites = async () => {
+    // -- Fetch a SQL para obtener ID del User
+
+    // OBTENER FAVORITOS DEL USUARIO
+    // Fetch a SQL para obtener los favoritos del User
+    let responseSQL = await fetch('/api/favorites/1')
+    favoritesUser = await responseSQL.json();
+    console.log(favoritesUser);
+    return favoritesUser;
+}
 
 // PINTAR RESULTADOS DE BÚSQUEDA EN EL DOM
 // Se hace una parte en el front porque hay que acceder al DOM
 const paintOffers = async (search) => {
+    await getFavorites()
 
+    // PINTAR OFERTAS DE MONGODB
     // Realizar la solicitud a la API
-    const response = await fetch('/api/joboffers');
+    const responseMongo = await fetch('/api/joboffers');
     // Verificar si la respuesta es exitosa
-    if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
+    if (!responseMongo.ok) {
+        throw new Error(`Error HTTP: ${responseMongo.status} - ${responseMongo.statusText}`);
     }
-
-    const data = await response.json();
+    const dataMongo = await responseMongo.json();
     // Transformamos el string que busca el cliente en un array
     let arraySearch = search.split(' ');
     // Iteramos el array de palabras de búsqueda
     arraySearch.forEach(wordSearch => {
         // Iteramos el array que recibimos por Mongo buscando coincidencias entre ellos
-        dataFiltered = data.filter(offer => {
+        dataFiltered = dataMongo.filter(offer => {
             return offer.title.toLowerCase().split(' ').some(word => word.includes(wordSearch.toLowerCase())) || offer.description.toLowerCase().split(' ').some(word => word.includes(wordSearch.toLowerCase()))
         });
     })
@@ -145,12 +158,12 @@ const paintOffers = async (search) => {
                 <div>
                     <div>
                         <div>
-                            <h2>${result.title}</h2>
+                            <h2 id=${result._id}>${result.title}</h2>
                             <p class="date">${result.date}</p>
                         </div>
                         <div class="divStars">
-                            <button class="heartButtonFull hidden"><i class="fa-solid fa-heart"></i></button>
-                            <button class="heartButtonEmpty"><i class="fa-regular fa-heart"></i></button>
+                            <button class="heartButtonFull hidden" id="${result._id}"><i class="fa-solid fa-heart"></i></button>
+                            <button class="heartButtonEmpty" id="${result._id}"><i class="fa-regular fa-heart"></i></button>
                         </div>
                     </div>
                     <div>
@@ -168,15 +181,68 @@ const paintOffers = async (search) => {
     let heartEmptyButtons = document.getElementsByClassName("heartButtonEmpty");
     let heartFullButtons = document.getElementsByClassName("heartButtonFull");
 
+    // CREAR FAVORITO
     for (let i = 0; i < heartEmptyButtons.length; i++) {
         // Vacío -> Lleno
-        heartEmptyButtons[i].addEventListener('click', () => {
+        heartEmptyButtons[i].addEventListener('click', async () => {
             heartEmptyButtons[i].classList.add("hidden");
             heartFullButtons[i].classList.remove("hidden");
+            // Sacar el ID de mongo de ese elemento
+            let idMongo = heartEmptyButtons[i].getAttribute('id');
+            // Sacar el título de Mongo
+            let h2 = document.getElementById(`${idMongo}`);
+            let titleMongo = h2.innerHTML;
+            // Coger datos cookie
+
+            await fetch('/api/favorites', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    user_id: 1,
+                    mongo_title: `${titleMongo}`,
+                    mongo_id: `${idMongo}`
+                })
+            })
+            //Refrescar favoritos
+            await getFavorites();
         });
-    
+
         // Lleno -> Vacío
-        heartFullButtons[i].addEventListener('click', () => {
+        heartFullButtons[i].addEventListener('click', async () => {
+            heartFullButtons[i].classList.add("hidden");
+            heartEmptyButtons[i].classList.remove("hidden");
+        });
+    }
+    // BORRAR FAVORITO
+    for (let i = 0; i < heartFullButtons.length; i++) {
+        // Vacío -> Lleno
+        heartFullButtons[i].addEventListener('click', async () => {
+            heartFullButtons[i].classList.add("hidden");
+            heartEmptyButtons[i].classList.remove("hidden");
+            // Cogemos el ID de mongo del botón en el que estemos
+            let idMongo = heartFullButtons[i].getAttribute('id');
+            console.log("ID de Mongo (string) : " + idMongo)
+            // Recorrer array de favoritos del user y buscar el que coincida con idMongo
+            let favoriteToDelete = favoritesUser.filter(favorite => favorite.mongo_id === idMongo);
+            console.log(favoriteToDelete)
+            let idFavoriteNum = favoriteToDelete[0].favorite_id;
+            console.log(typeof idFavoriteNum);
+            console.log(idFavoriteNum)
+            let idFavoriteString = idFavoriteNum.toString()
+            console.log("Favorito para borrar:" + idFavoriteString)
+            // let favoritesFromUser = await fetch('/api/favorites/1')
+            // let favoritesUser = await responseSQL.json();
+
+            // Coger datos cookie
+            // Fetch a Api para borrar favorito de ese usuario
+            await fetch(`/api/favorites/${idFavoriteNum}`, { method: "DELETE" })
+            // await fetch(`/api/favorites/15`, {method: "DELETE"})
+        });
+
+        // Lleno -> Vacío
+        heartFullButtons[i].addEventListener('click', async () => {
             heartFullButtons[i].classList.add("hidden");
             heartEmptyButtons[i].classList.remove("hidden");
         });
