@@ -4,19 +4,19 @@ const { createUser, getUsersByEmail } = require('../models/user.model');// inter
 const jwt = require('jsonwebtoken');  // JWT generar tokens
 const bcrypt = require('bcryptjs');  // Bcrypt para cifrar contraseñas
 
-// Registro de usuario
-//Creamos un nuevo usuario en la base de datos, encriptando su contraseña con bcryptjs antes de guardarla.
-async function register(req, res) {
-    const { username, password, email,img , role = 'user' } = req.body; // role se establece por defecto como 'user'
-    // console.log('Password recibido:', password);
-    try {
-        // Crear nuevo usuario en la base de datos
-        const newUser = await createUser(username, password, email,img, role);
-        res.redirect('/login');  // Redireccionar al login si todo sale bien 
-    } catch (error) {
-        res.status(500).send('Error en el registro'); 
-    }
-}
+// // Registro de usuario
+// //Creamos un nuevo usuario en la base de datos, encriptando su contraseña con bcryptjs antes de guardarla.
+// async function register(req, res) {
+//     const { username, password, email,img , role = 'user' } = req.body; // role se establece por defecto como 'user'
+//     // console.log('Password recibido:', password);
+//     try {
+//         // Crear nuevo usuario en la base de datos
+//         const newUser = await createUser(username, password, email,img, role);
+//         res.redirect('/');  // Redireccionar al login si todo sale bien 
+//     } catch (error) {
+//         res.status(500).send('Error en el registro'); 
+//     }
+// }
 
 // Inicio de sesión
 async function login(req, res) {
@@ -100,4 +100,4 @@ async function googleLogin(req, res) {
 
 
 
-module.exports = { register, login, logout, googleLogin };
+module.exports = {login, logout, googleLogin };
