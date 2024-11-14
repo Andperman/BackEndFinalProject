@@ -26,7 +26,7 @@ html(lang="en")
       div#popupSignUp.popup
           div.popup-content
               span.close#closePopupSignUp <i class="fa-solid fa-xmark"></i>
-              form#formSignUp(action="#" method="POST")
+              form#formSignUp(action="/" method="POST")
                 h2 Sign Up Form
                 div
                     label(for="signUpEmail") Email:
@@ -35,6 +35,7 @@ html(lang="en")
                     label(for="signUpPass") Password:
                     input#signUpPass(type="password" name="pass" placeholder="Your password goes here" required)
                 div
+              a(href="/google")
                   button#googleButton 
                     img(src="../assets/google_icon.png", alt="Google Icon")
                     p Sign Up with Google
