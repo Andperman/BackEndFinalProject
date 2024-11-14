@@ -97,7 +97,7 @@ const scrapAndSaveJobOffers = async (req, res) => {
             }
         }
 
-        // Responde con los anuncios guardados en MongoDB
+        // Respondemos con los anuncios guardados en MongoDB
         res.status(201).json({
             message: "Job offers scrapped and saved successfully",
             data: savedOffers
