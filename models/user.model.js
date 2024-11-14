@@ -43,7 +43,7 @@ const createUser = async (user) => {
     let client, result;
 
     // Si el username es null o undefined, asigna uno por defecto
-    const finalUsername = username ? username : email.split('@')[0]; // Usamos el correo sin el dominio como username si no se pasa uno
+    const finalUsername = username ? username : email.split('@')[0]; 
     try {
         client = await pool.connect(); // Espera a abrir conexion
         const hashedPassword = password ? await bcrypt.hash(password, 10) : null; // Si hay contraseña, la hasheamos

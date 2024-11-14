@@ -26,25 +26,35 @@ html(lang="en")
       div#popupSignUp.popup
           div.popup-content
               span.close#closePopupSignUp <i class="fa-solid fa-xmark"></i>
-              form#formSignUp(action="#" method="POST")
+              form#formSignUp(action="/register" method="POST")
                 h2 Sign Up Form
                 div
+                    label(for="signUpUsername") Username:
+                    input#signUpEmail(type="text" name="username" placeholder="Your username goes here" required)
+                div
                     label(for="signUpEmail") Email:
-                    input#signUpEmail(type="email" name="name" placeholder="Your email goes here" required)
+                    input#signUpEmail(type="email" name="email" placeholder="Your email goes here" required)
                 div
                     label(for="signUpPass") Password:
-                    input#signUpPass(type="password" name="pass" placeholder="Your password goes here" required)
+                    input#signUpPass(type="password" name="password" placeholder="Your password goes here" required)
                 div
+                  label(for="signUpImg") URL Image:
+                  input#signUpPass(type="text" name="img" placeholder="Put your URL image" required)
+                div
+
+                    input.button(type="submit" value="CREATE ACCOUNT")
+                    
+              a(href="/google")
                   button#googleButton 
                     img(src="../assets/google_icon.png", alt="Google Icon")
                     p Sign Up with Google
-                  input.button(type="submit" value="CREATE ACCOUNT")
+
                   .warningDiv
       // Popup Login
       #popupLogin.popup
         .popup-content
             span.close#closePopupLogin <i class="fa-solid fa-xmark"></i>
-            form#formLoginn(action="#" method="POST")
+            form#formLoginn(action="/login" method="POST")
               h2 Login Form
               div
                   label(for="loginEmail") Email:

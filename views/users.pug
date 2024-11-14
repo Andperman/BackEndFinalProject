@@ -11,13 +11,33 @@ html(lang="en")
                     i.fa-solid.fa-bars#openMenu
                     i.fa-solid.fa-xmark.hidden#closeMenu
                 ul.menu
-                    li: a(href="./home") Home
+                    li: a(href="/") Home
                     if role === 'admin'
                         li: a(href='/admin/dashboard') Dashboard
                     else if role === 'user'
                         li: a(href='/favorites') Favorites
                     button#logOut LOGOUT
     main
+        div#popupAddUser.popup
+            div.popup-content
+                span.close#closePopupAddUser <i class="fa-solid fa-xmark"></i>
+                h2 Create a new user
+                form#formNewUser(action="/api/user" method="POST")
+                    div
+                        label(for="signUpUsername") Username:
+                        input#signUpEmail(type="text" name="username" placeholder="Username goes here" required)
+                    div
+                        label(for="signUpEmail") Email:
+                        input#signUpEmail(type="email" name="email" placeholder="Email goes here" required)
+                    div
+                        label(for="signUpPass") Password:
+                        input#signUpPass(type="password" name="pass" placeholder="Password goes here" required)
+                    div
+                        label(for="signUpImg") URL Image:
+                        input#signUpPass(type="text" name="img" placeholder="URL image" required)
+                    input.button(type="submit" value="CREATE USER")
         h1 Users
+        div#buttonsDashboardUsers
+                    button#addUser Add a new user <i class="fa-solid fa-plus"></i>
         section.usersSection#divAllUsers
     script(src="/js/script.js")

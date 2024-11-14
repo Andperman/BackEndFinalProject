@@ -6,6 +6,7 @@ const authMiddleware = require('../middlewares/authMiddleware');  //extraer el t
 const authorizeRole = require('../middlewares/roleMiddleware'); //permitir acceso según los roles
 const {userDataValidateChainMethod} = require('../validation/user.validation');
 
+
 // Controladores
 const { login, logout, googleLogin } = require('../controllers/authController'); //funciones para registrar
 const { getProfile, getFavorites } = require('../controllers/views.controller'); //funciones para usuariio solo
@@ -14,11 +15,17 @@ const { createJobOffer} = require('../controllers/jobOffers.controller'); //func
 const userController = require ('../controllers/user.controller') //funcion para crear usuario
 
 // Rutas de autenticación
+
 router.get('/register', (req, res) => res.render('register'));  // Registro
 router.post('/register', userDataValidateChainMethod, userController.createUser);                              // Registrar usuario
 router.get('/login', (req, res) => res.render('home'));         // Login
 router.post('/login', login);                                    // Login usuario
+router.get('/register', (req, res) => res.render('home'));  // Registro                            // Registrar usuario
+
 router.get('/logout', logout);                                   // Logout usuario
+router.get('/', (req, res) => {
+    res.render('home');  
+});
 
 // Rutas de autenticación con Google
 router.get('/google', passport.authenticate('google', { scope: ['email', 'profile'], prompt: 'select_account' }));
