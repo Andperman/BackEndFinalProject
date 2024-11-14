@@ -8,7 +8,7 @@ const {userDataValidateChainMethod} = require('../validation/user.validation');
 
 
 // Controladores
-const { login, logout, googleLogin } = require('../controllers/authController'); //funciones para registrar
+const { logout, googleLogin } = require('../controllers/authController'); //funciones para registrar
 const { getProfile, getFavorites } = require('../controllers/views.controller'); //funciones para usuariio solo
 const { getUsersView ,getDashboard } = require('../controllers/views.controller');  //funciones  para admin
 const { createJobOffer} = require('../controllers/jobOffers.controller'); //funciones para admin
@@ -19,7 +19,7 @@ const userController = require ('../controllers/user.controller') //funcion para
 router.get('/register', (req, res) => res.render('register'));  // Registro
 router.post('/register', userDataValidateChainMethod, userController.createUser);                              // Registrar usuario
 router.get('/login', (req, res) => res.render('home'));         // Login
-router.post('/login', login);                                    // Login usuario
+router.post('/login', (req, res) => res.render('home'));                                    // Login usuario
 router.get('/register', (req, res) => res.render('home'));  // Registro                            // Registrar usuario
 
 router.get('/logout', logout);                                   // Logout usuario

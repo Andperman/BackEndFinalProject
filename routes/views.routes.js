@@ -3,6 +3,7 @@ const express = require('express');
 const viewsController = require("../controllers/views.controller");
 const router = express.Router();
 
+
 router.get('/', viewsController.getHome);
 router.get('/profile', viewsController.getProfile);
 router.get('/favorites', viewsController.getFavorites);
