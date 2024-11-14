@@ -11,6 +11,7 @@ html(lang="en")
                   i.fa-solid.fa-bars#openMenu
                   i.fa-solid.fa-xmark#closeMenu.hidden
               ul.menu
+                  li: a(href="/") Home
                   li: a(href="./profile") Profile
                   if role === 'admin'
                       li: a(href='/admin/dashboard') Dashboard

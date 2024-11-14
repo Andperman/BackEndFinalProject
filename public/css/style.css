@@ -17,8 +17,9 @@
 
 body {
     background: var(--gradient1);
+    background-size: cover;
     background-repeat: none;
-    height: 100vh;
+    height: 100%;
     padding: 0px 10%;
 }
 
