@@ -14,12 +14,14 @@ const { createJobOffer} = require('../controllers/jobOffers.controller'); //func
 const userController = require ('../controllers/user.controller') //funcion para crear usuario
 
 // Rutas de autenticación
-router.get('/register', (req, res) => res.render('register'));  // Registro
+router.get('/register', (req, res) => res.render('home'));  // Registro
 router.post('/register', userController.createUser);                              // Registrar usuario
-router.get('/login', (req, res) => res.render('home'));         // Login
-router.post('/login', login);                                    // Login usuario
+// router.get('/login', (req, res) => res.render('home'));        
+router.post('/login', (req, res) => res.render('home'));                                    // Login usuario
 router.get('/logout', logout);                                   // Logout usuario
-
+router.get('/', (req, res) => {
+    res.render('home');  
+});
 
 // Rutas de autenticación con Google
 router.get('/google', passport.authenticate('google', { scope: ['email', 'profile'], prompt: 'select_account' }));

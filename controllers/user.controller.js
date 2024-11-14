@@ -24,15 +24,26 @@ const getUsersByEmail = async (req, res) => {
 }
 
 // Crear usuario //Post
+// const createUser = async (req, res) => {
+//     const newUser = req.body; // {username,email,password, img}
+//     const response = await User.createUser(newUser);
+//     res.status(201).json({
+//         "items_created": response,
+//         message: `User created: ${req.body.email}`,
+//         data: newUser
+//     });
+// }
+
 const createUser = async (req, res) => {
-    const newUser = req.body; // {username,email,password, img}
-    const response = await User.createUser(newUser);
-    res.status(201).json({
-        "items_created": response,
-        message: `User created: ${req.body.email}`,
-        data: newUser
-    });
-}
+    const newUser = req.body; // {username, email, password, img}
+    try {
+        const response = await User.createUser(newUser);  
+        res.redirect('/');  
+    } catch (error) {
+        console.log(`ERROR: ${error.stack}`);
+        res.status(400).json({ msj: `ERROR: ${error.stack}` }); 
+    }
+};
 // Actualizar Autor por email
 const updateUserByEmail = async (req, res) => {
     const { email } = req.query; // {name, surname, image, email, currentEmail}
