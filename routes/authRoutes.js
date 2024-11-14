@@ -5,6 +5,7 @@ const passport = require('passport');
 const authMiddleware = require('../middlewares/authMiddleware');  //extraer el token y verificar si es correcto
 const authorizeRole = require('../middlewares/roleMiddleware'); //permitir acceso según los roles
 
+
 // Controladores
 const { login, logout, googleLogin } = require('../controllers/authController'); //funciones para registrar
 const { getProfile, getFavorites } = require('../controllers/views.controller'); //funciones para usuariio solo
