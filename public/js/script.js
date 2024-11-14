@@ -150,6 +150,7 @@ const paintFavorites = async () => {
                 toggleFavorite(heartEmptyButtons[i].getAttribute('id'), false);
                 heartEmptyButtons[i].classList.add("hidden");
                 heartFullButtons[i].classList.remove("hidden");
+                paintFavorites();
             });
         }
 
@@ -158,6 +159,7 @@ const paintFavorites = async () => {
                 toggleFavorite(heartFullButtons[i].getAttribute('id'), true);
                 heartFullButtons[i].classList.add("hidden");
                 heartEmptyButtons[i].classList.remove("hidden");
+                paintFavorites();
             });
         }
     })
