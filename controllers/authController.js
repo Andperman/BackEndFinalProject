@@ -40,7 +40,8 @@ async function login(req, res) {
             res.cookie('token', token, { httpOnly: true });
             
             // Redireccionar según el rol del usuario
-            res.redirect(user.role === 'admin' ? '/admin/dashboard' : '/profile');
+            // res.redirect(user.role === 'admin' ? '/admin/dashboard' : '/profile');
+            res.redirect('/');
         } else {
             res.status(401).send('Credenciales inválidas');
         }
