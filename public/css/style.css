@@ -18,7 +18,8 @@
 body {
     background: var(--gradient1);
     background-size: cover;
-    background-repeat: none;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     height: 100%;
     padding: 0px 10%;
 }
@@ -36,6 +37,13 @@ header i {
     font-size: 24px;
 }
 
+section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
 li {
     list-style: none;
 }
@@ -46,6 +54,17 @@ a {
 
 li a {
     color: var(--white);
+}
+
+.hidden {
+    /* display: none; */
+    display: none !important;
+}
+
+article>div {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 #divUser {
@@ -62,6 +81,7 @@ li a {
     display: flex;
     flex-direction: row;
     padding-bottom: 40px;
+    height:fit-content;
 }
 
 #divFormHome input:first-child {
@@ -73,20 +93,6 @@ li a {
     align-items: center;
     justify-content: space-around;
     margin-bottom: 50px;
-}
-
-.hidden {
-    /* display: none; */
-    display: none !important;
-}
-
-
-
-section {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
 }
 
 .offerArticle {
@@ -177,12 +183,6 @@ section {
     object-fit: cover;
 }
 
-article>div {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
 #addOffer, #refreshOffers {
     display: flex;
     align-items: center;
@@ -203,6 +203,8 @@ article>div {
     justify-content:center;
     align-items: center;
     gap: 16px;
+    width: 100%;
+    margin-top: 20px;
 }
 
 #formSignUp div:nth-child(6) {
