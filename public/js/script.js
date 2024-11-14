@@ -40,8 +40,8 @@ if (document.querySelector("#popupSignUp")) {
     };
 }
 
+// Mostrar/Ocultar Create Job Offer
 if (document.querySelector("#popupAddOffer")) {
-    // Mostrar/Ocultar Create Job Offer -------
     let popupAddOffer = document.querySelector('#popupAddOffer');
 
     document.querySelector('#addOffer').onclick = function () {
@@ -52,6 +52,22 @@ if (document.querySelector("#popupAddOffer")) {
         popupAddOffer.style.display = 'none';
     };
 }
+
+// Mostrar/Ocultar Create User
+if (document.querySelector("#popupAddUser")) {
+    let popupAddOffer = document.querySelector('#popupAddUser');
+
+    document.querySelector('#addUser').onclick = function () {
+        popupAddUser.style.display = 'block';
+    };
+
+    document.querySelector('#closePopupAddUser').onclick = function () {
+        popupAddUser.style.display = 'none';
+    };
+}
+
+
+// #buttonsDashboardUsers
 
 // FORMULARIO DE BÚSQUEDA -> PINTAR OFERTAS
 if (document.querySelector('#formResults')) {
