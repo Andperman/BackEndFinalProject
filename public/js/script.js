@@ -315,7 +315,6 @@ const paintOffersInDashboard = async () => {
     const dataMongo = await responseMongo.json();
     // Iteramos el array y bsucamos los que estén hechas por el admin
     let dataFiltered = dataMongo.filter(offer => offer.createdBy === "admin");
-    console.log(dataFiltered)
     // Pintar resultados
     let section = document.querySelector("#divDashboard");
     section.innerHTML = "";
@@ -332,10 +331,31 @@ const paintOffersInDashboard = async () => {
                     <div>
                         <p>${result.description}</p>
                     </div>
+                    <div>
+                        <button class="editOffer" id="${result._id}"><i class="fa-solid fa-pen"></i></button>
+                        <button class="eraseOffer" id="${result._id}"><i class="fa-solid fa-trash"></i></button>
+                    </div>
                 </div>                
             </article>
         `
+
     })
+    let eraseOffer = document.getElementsByClassName('eraseOffer');
+    for (let i = 0; i < eraseOffer.length; i++) {
+        eraseOffer[i].addEventListener('click', async () => {
+            console.log("HOLA")
+            let id = eraseOffer[i].getAttribute('id')
+            await fetch(`/api/joboffers/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+
+
+            })
+
+        })
+    }
 }
 
 // Si estamos en el dashboard, pintar ofertas del admin

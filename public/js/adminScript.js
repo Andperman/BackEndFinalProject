@@ -27,7 +27,29 @@ if (document.getElementById('formNewOffer')) {
                 website: `${website}`,
                 createdBy: "admin" //siempre son admin si vienen de este form. Esta solución nos ayuda internamente para filtrar offers
             }
-        )}
+            )
+        }
 
-    )}
-)}
+        )
+    }
+    )
+}
+if (document.getElementById('divDashboard')) {
+
+    let eraseOffer = document.getElementsByClassName('eraseOffer');
+    for (let i = 0; i < eraseOffer.length; i++) {
+        console.log(eraseOffer[i])
+        eraseOffer[i].addEventListener('click', async () => {
+            let id = eraseOffer[i].getAttribute('id')
+            await fetch(`/api/joboffers/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+
+
+            })
+    
+        })
+    }
+}
