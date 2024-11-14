@@ -19,6 +19,7 @@ router.get('/login', (req, res) => res.render('home'));         // Login
 router.post('/login', login);                                    // Login usuario
 router.get('/logout', logout);                                   // Logout usuario
 
+
 // Rutas de autenticación con Google
 router.get('/google', passport.authenticate('google', { scope: ['email', 'profile'], prompt: 'select_account' }));
 router.get('/google/callback',
