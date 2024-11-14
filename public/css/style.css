@@ -245,6 +245,10 @@ article>div {
     color: black;
 }
 
+.eraseOffer, .eraseUser {
+    background: var(--black);
+    color: var(--white);
+}
 
 button,
 .button {

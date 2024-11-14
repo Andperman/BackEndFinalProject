@@ -292,13 +292,26 @@ const paintAllUsers = async () => {
                         <li>*********</li>
                     </ul>
                     <div>
-                        <button id="editUser"><i class="fa-solid fa-pen"></i></button>
-                        <button id="eraseUser"><i class="fa-solid fa-trash"></i></button>
+                        <button class="eraseUser" id="${user.email}"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>
             </article>
         `
     })
+
+    let eraseUser = document.getElementsByClassName('eraseUser');
+    for (let i = 0; i < eraseUser.length; i++) {
+        eraseUser[i].addEventListener('click', async () => {
+            let email = eraseUser[i].getAttribute('id')
+            await fetch(`/api/user/email?email=${email}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            paintAllUsers();
+        })
+    }
 }
 
 
@@ -332,7 +345,6 @@ const paintOffersInDashboard = async () => {
                         <p>${result.description}</p>
                     </div>
                     <div>
-                        <button class="editOffer" id="${result._id}"><i class="fa-solid fa-pen"></i></button>
                         <button class="eraseOffer" id="${result._id}"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>                
@@ -343,17 +355,14 @@ const paintOffersInDashboard = async () => {
     let eraseOffer = document.getElementsByClassName('eraseOffer');
     for (let i = 0; i < eraseOffer.length; i++) {
         eraseOffer[i].addEventListener('click', async () => {
-            console.log("HOLA")
             let id = eraseOffer[i].getAttribute('id')
             await fetch(`/api/joboffers/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json"
                 }
-
-
             })
-
+            paintOffersInDashboard();
         })
     }
 }
