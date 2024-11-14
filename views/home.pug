@@ -29,11 +29,17 @@ html(lang="en")
               form#formSignUp(action="/" method="POST")
                 h2 Sign Up Form
                 div
+                    label(for="signUpUsername") Username:
+                    input#signUpEmail(type="text" name="username" placeholder="Your username goes here" required)
+                div
                     label(for="signUpEmail") Email:
                     input#signUpEmail(type="email" name="email" placeholder="Your email goes here" required)
                 div
                     label(for="signUpPass") Password:
                     input#signUpPass(type="password" name="pass" placeholder="Your password goes here" required)
+                div
+                  label(for="signUpImg") URL Image:
+                  input#signUpPass(type="text" name="img" placeholder="Put your URL image" required)
                 div
               a(href="/google")
                   button#googleButton 
