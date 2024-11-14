@@ -1,30 +1,3 @@
-// Validación de regex
-const userDataValidate = (req, res, next) => {
-  let errorMessage = "";
-  if (!req.body.email) {
-    errorMessage = "email is required";
-  }
-  if (!req.body.password) {
-    errorMessage = "password is required";
-  }
-  if (req.body.password.length < 5) {
-    errorMessage = "password should have at least 5 characters";
-  }
-  if (
-    req.body.email.match(
-      '/^(([^<>()[]\\.,;:s@"]+(.[^<>()[]\\.,;:s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/'
-    )
-  ) {
-    errorMessage = "provide valid email";
-  }
-
-  // send error
-  if (errorMessage) {
-    res.status(400).json({ success: false, errorMessage });
-  }
-
-  next();
-};
 
 const { body } = require("express-validator");
 
@@ -44,6 +17,5 @@ const userDataValidateChainMethod = [ // -- ARRAY DE VALIDACIONES, EN CADA POSIC
 ];
 
 module.exports = {
-  userDataValidate,
   userDataValidateChainMethod
 };
