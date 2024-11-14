@@ -1,4 +1,6 @@
 const User = require('../models/user.model'); // Importar el modelo de la BBDD
+const { validationResult } = require("express-validator");
+
 
 // GET http://localhost:3000/users --> ALL
 // GET http://localhost:3000/users?email=hola@gmail.com --> query por email
@@ -24,14 +26,28 @@ const getUsersByEmail = async (req, res) => {
 }
 
 // Crear usuario //Post
-const createUser = async (req, res) => {
-    const newUser = req.body; // {username,email,password, img}
-    const response = await User.createUser(newUser);
-    res.status(201).json({
-        "items_created": response,
-        message: `User created: ${req.body.email}`,
-        data: newUser
-    });
+const createUser = async (req, res, next) => {
+    try {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                errors: errors.array(),
+            });
+        }
+        const newUser = req.body; // {username,email,password, img}
+        const response = await User.createUser(newUser);
+        res.status(201).json({
+            "items_created": response,
+            message: `User created: ${req.body.email}`,
+            data: newUser
+        })
+    } catch (error) {
+        console.error('Error updating User:', error)
+        res.status(500).json({ error: 'Internal server error' })
+        next(error)
+
+    }
 }
 // Actualizar Autor por email
 const updateUserByEmail = async (req, res) => {

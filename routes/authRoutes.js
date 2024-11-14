@@ -4,6 +4,7 @@ const router = express.Router();
 const passport = require('passport');
 const authMiddleware = require('../middlewares/authMiddleware');  //extraer el token y verificar si es correcto
 const authorizeRole = require('../middlewares/roleMiddleware'); //permitir acceso según los roles
+const {userDataValidateChainMethod} = require('../validation/user.validation');
 
 // Controladores
 const { login, logout, googleLogin } = require('../controllers/authController'); //funciones para registrar
@@ -14,7 +15,7 @@ const userController = require ('../controllers/user.controller') //funcion para
 
 // Rutas de autenticación
 router.get('/register', (req, res) => res.render('register'));  // Registro
-router.post('/register', userController.createUser);                              // Registrar usuario
+router.post('/register', userDataValidateChainMethod, userController.createUser);                              // Registrar usuario
 router.get('/login', (req, res) => res.render('home'));         // Login
 router.post('/login', login);                                    // Login usuario
 router.get('/logout', logout);                                   // Logout usuario
