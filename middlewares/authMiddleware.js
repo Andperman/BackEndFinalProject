@@ -7,13 +7,13 @@ function authMiddleware(req, res, next) {
     const token = req.cookies.token;
     // Si no hay token, redirigir al login
     if (!token) {
-        return res.redirect('/login');  
+        return res.redirect('/');  
     }
     // Si hay un token, verificarlo
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         // Si hay un error en la verificación (token no válido o expirado)
         if (err) {
-            return res.redirect('/login');  
+            return res.redirect('/');  
         }
         // Si el token es válido, almacenar los datos decodificados en req.user
         req.user = decoded;
