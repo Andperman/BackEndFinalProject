@@ -39,9 +39,9 @@ router.get('/profile', authMiddleware, getProfile);              // Perfil de us
 router.get('/favorites', authMiddleware, getFavorites);          // Ofertas favoritas
 
 // Rutas de administrador (requiere autenticación y rol de 'admin')
-router.get('/admin/dashboard', authMiddleware, authorizeRole('admin'),  getDashboard); // Dashboard admin
-router.get('/admin/users', authMiddleware, authorizeRole('admin'), getUsersView);         // Listado de usuarios
-router.post('/admin/job', authMiddleware, authorizeRole('admin'), createJobOffer);          // Crear anuncio
+router.get('/dashboard', authMiddleware, authorizeRole('admin'),  getDashboard); // Dashboard admin
+router.get('/users', authMiddleware, authorizeRole('admin'), getUsersView);         // Listado de usuarios
+router.post('/job', authMiddleware, authorizeRole('admin'), createJobOffer);          // Crear anuncio
 
 // Ruta de fallo en la autenticación con Google
 router.get('/auth/failure', (req, res) => {    //poner las rutas de fallos
