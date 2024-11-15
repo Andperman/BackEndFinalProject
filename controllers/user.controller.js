@@ -1,9 +1,6 @@
 const User = require('../models/user.model'); // Importar el modelo de la BBDD
 const { validationResult } = require("express-validator");
 
-
-// GET http://localhost:3000/users --> ALL
-// GET http://localhost:3000/users?email=hola@gmail.com --> query por email
 const getAllUsers = async (req, res) => {
     let users;
     users = await User.getAllUsers();
@@ -41,8 +38,11 @@ const createUser = async (req, res, next) => {
         res.status(201).json({
             "items_created": response,
             message: `User created: ${req.body.email}`,
-            data: newUser
-        }).redirect('/')
+            username: newUser.username,
+            email: newUser.email,
+            password: "*************",
+            img: newUser.img
+        })
     } catch (error) {
         console.error('Error updating User:', error)
         res.status(500).json({ error: 'Internal server error' })
@@ -51,21 +51,9 @@ const createUser = async (req, res, next) => {
     }
 }
 
-// const createUser = async (req, res) => {
-//     const newUser = req.body; // {username,email,password, img}
-//     const response = await User.createUser(newUser);
-//     res.status(201).json({
-//         "items_created": response,
-//         message: `User created: ${req.body.email}`,
-//         data: newUser
-//     });
-// }
-
-
-// Actualizar Autor por email
 const updateUserByEmail = async (req, res) => {
-    const { email } = req.query; // {name, surname, image, email, currentEmail}
-    const updatedUserData = req.body; // current email como criterio de búsqueda de autor
+    const { email } = req.query; 
+    const updatedUserData = req.body; 
     try {
         const response = await User.updateUserByEmail(email);
         if (response) {

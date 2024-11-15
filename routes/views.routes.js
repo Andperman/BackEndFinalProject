@@ -1,5 +1,5 @@
 const express = require('express');
-// Rutas de productos
+// Rutas de vistas
 const viewsController = require("../controllers/views.controller");
 const router = express.Router();
 
