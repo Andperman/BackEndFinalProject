@@ -40,7 +40,7 @@
 - (Fase III): UX/UI by role, Auth con Google, JWT y autenticación interna. Implementación y conexión correcta de toda la aplicación web:
 En esta fase se ha planteado una comunicación total de todos los aspectos y archivos internos del proyecto, con diferentes diagramas de flujo de lo que puede o no hacer el usuario según su rol en la web (admin o user):
 ##### user: 
-    Registro (Manual y Google), login, consulta y visualización de anuncios de proyecto, marcar y desmarcar como favorito un anuncio concreto, editar su info de usuario(Profile)
+    Registro (Manual y Google), login, consulta y visualización de anuncios de proyecto, marcar y desmarcar como favorito un anuncio concreto, ver todos sus favoritos, editar su info de usuario(Profile)
 
 ##### admin (/dashboard): 
     Registro (Manual y Google), login, consulta y visualización de anuncios de proyecto, marcar y desmarcar como favorito un anuncio concreto, editar info de usuarios(Profile), editar users y borrarlos, crear ofertas de proyecto, cargar nuevas ofertas a la BBDD de MongoDB (sin duplicados)
