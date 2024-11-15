@@ -43,6 +43,7 @@ const createUser = async (req, res, next) => {
             password: "*************",
             img: newUser.img
         })
+        //res.redirect al pug que toca. Da conflicto con los dos res
     } catch (error) {
         console.error('Error updating User:', error)
         res.status(500).json({ error: 'Internal server error' })
